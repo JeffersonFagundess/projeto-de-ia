@@ -1,0 +1,3044 @@
+{
+  "protocolo": "Mesmo motor para ambos os lados. Posição inicial completa; cores alternadas. Sugestões seguidas em todas as jogadas do lado assistido. A ajuda tem mais tempo nas fases com menos peças; o computador permanece com 1,5 s. --segundos força orçamento igual para uma comparação controlada.",
+  "segundos_por_jogada_iguais_se_forcado": null,
+  "tempo_automatico_ajuda": "3 s acima de 16 peças; 4 s entre 9 e 16; 5 s com até 8 peças",
+  "tempo_computador": 1.5,
+  "profundidade_maxima": 12,
+  "max_turnos": 180,
+  "avaliador_assistido": "Avaliação estratégica + ajuste limitado da rede neural",
+  "adversario": "Computador real da interface; avaliação tradicional de material e avanço",
+  "limites": "Amostra pequena, dependente do tempo e hardware. Não garante vitória; inacabadas são contadas separadamente de empates.",
+  "resumo": {
+    "inacabada": 1,
+    "vitoria": 1
+  },
+  "tempo_total_s": 667.25,
+  "partidas": [
+    {
+      "numero": 1,
+      "semente": 20261009,
+      "assistido": "V",
+      "resultado": "inacabada",
+      "turnos": 180,
+      "profundidade_media_ia": 8.811111111111112,
+      "profundidade_media_computador": 8.633333333333333,
+      "jogadas": [
+        {
+          "vez": "V",
+          "caminho": [
+            "g3",
+            "f4"
+          ],
+          "nota": -2.441291043216418,
+          "profundidade": 8,
+          "nos": 27649,
+          "alternativas": 5,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b6",
+            "a5"
+          ],
+          "nota": 6,
+          "profundidade": 9,
+          "nos": 25537,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e3",
+            "d4"
+          ],
+          "nota": -0.7730521104567676,
+          "profundidade": 8,
+          "nos": 27649,
+          "alternativas": 4,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f6",
+            "e5"
+          ],
+          "nota": 3,
+          "profundidade": 9,
+          "nos": 23681,
+          "alternativas": 3,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d4",
+            "f6"
+          ],
+          "nota": 7.801563965364435,
+          "profundidade": 9,
+          "nos": 24001,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g7",
+            "e5",
+            "g3"
+          ],
+          "nota": 3,
+          "profundidade": 9,
+          "nos": 22785,
+          "alternativas": 2,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h2",
+            "f4"
+          ],
+          "nota": 4.091280422362578,
+          "profundidade": 8,
+          "nos": 26561,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "h8",
+            "g7"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 24897,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d2",
+            "e3"
+          ],
+          "nota": 4.327587569866816,
+          "profundidade": 8,
+          "nos": 26497,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g7",
+            "f6"
+          ],
+          "nota": 3,
+          "profundidade": 9,
+          "nos": 24321,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f2",
+            "g3"
+          ],
+          "nota": -0.474845406553551,
+          "profundidade": 8,
+          "nos": 23361,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b6"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 25601,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c1",
+            "d2"
+          ],
+          "nota": 4.0501078577776,
+          "profundidade": 7,
+          "nos": 23681,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f6",
+            "g5"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 25153,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c3",
+            "d4"
+          ],
+          "nota": -3.424023762047753,
+          "profundidade": 8,
+          "nos": 26113,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "a7"
+          ],
+          "nota": 6,
+          "profundidade": 9,
+          "nos": 27201,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d2",
+            "c3"
+          ],
+          "nota": 7.388264366682824,
+          "profundidade": 9,
+          "nos": 29441,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "d6",
+            "c5"
+          ],
+          "nota": 9,
+          "profundidade": 9,
+          "nos": 30273,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g3",
+            "h4"
+          ],
+          "nota": 27.68651100118638,
+          "profundidade": 10,
+          "nos": 33601,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c7",
+            "d6"
+          ],
+          "nota": 0,
+          "profundidade": 10,
+          "nos": 27777,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h4",
+            "f6"
+          ],
+          "nota": 23.162467073591586,
+          "profundidade": 11,
+          "nos": 25857,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e7",
+            "g5"
+          ],
+          "nota": -6,
+          "profundidade": 11,
+          "nos": 31553,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g1",
+            "f2"
+          ],
+          "nota": 23.162467073591586,
+          "profundidade": 9,
+          "nos": 28097,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "d8",
+            "c7"
+          ],
+          "nota": -6,
+          "profundidade": 10,
+          "nos": 27713,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d4",
+            "e5"
+          ],
+          "nota": 11.008890986910002,
+          "profundidade": 10,
+          "nos": 36033,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c5",
+            "d4"
+          ],
+          "nota": -3,
+          "profundidade": 12,
+          "nos": 29452,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e3",
+            "c5",
+            "e7"
+          ],
+          "nota": 22.050802340241813,
+          "profundidade": 11,
+          "nos": 31297,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g5",
+            "e3",
+            "g1"
+          ],
+          "nota": 0,
+          "profundidade": 11,
+          "nos": 35841,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e7",
+            "d8"
+          ],
+          "nota": -2.4428327712707594,
+          "profundidade": 10,
+          "nos": 45313,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "h6",
+            "g5"
+          ],
+          "nota": -3,
+          "profundidade": 10,
+          "nos": 30017,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e5",
+            "d6"
+          ],
+          "nota": 4.032487508506767,
+          "profundidade": 10,
+          "nos": 41857,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c7",
+            "e5"
+          ],
+          "nota": -3,
+          "profundidade": 10,
+          "nos": 15617,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c3",
+            "b4"
+          ],
+          "nota": 19.42938123771993,
+          "profundidade": 11,
+          "nos": 46401,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a5",
+            "c3"
+          ],
+          "nota": 0,
+          "profundidade": 11,
+          "nos": 31617,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "b2",
+            "d4",
+            "f6"
+          ],
+          "nota": 12.060704507551673,
+          "profundidade": 11,
+          "nos": 52929,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b6",
+            "a5"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 35265,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d8",
+            "c7"
+          ],
+          "nota": 12.060704507551673,
+          "profundidade": 9,
+          "nos": 42241,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g5",
+            "h4"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 28865,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "a1",
+            "b2"
+          ],
+          "nota": 33.57028051323436,
+          "profundidade": 9,
+          "nos": 50817,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "h4",
+            "g3"
+          ],
+          "nota": 3,
+          "profundidade": 9,
+          "nos": 37825,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "b2",
+            "c3"
+          ],
+          "nota": 8.458265008154097,
+          "profundidade": 9,
+          "nos": 57217,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g1",
+            "f2"
+          ],
+          "nota": 6,
+          "profundidade": 9,
+          "nos": 36673,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c3",
+            "d4"
+          ],
+          "nota": 12.017461591953872,
+          "profundidade": 9,
+          "nos": 49345,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e3"
+          ],
+          "nota": 12,
+          "profundidade": 9,
+          "nos": 37249,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d4",
+            "c5"
+          ],
+          "nota": 18.80513965380037,
+          "profundidade": 9,
+          "nos": 54657,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g3",
+            "h2"
+          ],
+          "nota": -6,
+          "profundidade": 8,
+          "nos": 35201,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c5",
+            "d6"
+          ],
+          "nota": 9.904452273616812,
+          "profundidade": 10,
+          "nos": 64769,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "h2",
+            "g1"
+          ],
+          "nota": -3,
+          "profundidade": 9,
+          "nos": 37121,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f6",
+            "e7"
+          ],
+          "nota": 14.916631633255648,
+          "profundidade": 9,
+          "nos": 61825,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g1",
+            "h2"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 40257,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e7",
+            "d8"
+          ],
+          "nota": 19.501582303334718,
+          "profundidade": 9,
+          "nos": 53697,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b6"
+          ],
+          "nota": 0,
+          "profundidade": 7,
+          "nos": 29953,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c7",
+            "b8"
+          ],
+          "nota": 158.8,
+          "profundidade": 9,
+          "nos": 47809,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b6",
+            "c5"
+          ],
+          "nota": -59,
+          "profundidade": 8,
+          "nos": 36545,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d8",
+            "c7"
+          ],
+          "nota": 138.8,
+          "profundidade": 8,
+          "nos": 49729,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f8",
+            "g7"
+          ],
+          "nota": -56,
+          "profundidade": 8,
+          "nos": 43329,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d6",
+            "e7"
+          ],
+          "nota": 162.1199423589994,
+          "profundidade": 8,
+          "nos": 56001,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g7",
+            "f6"
+          ],
+          "nota": -56,
+          "profundidade": 8,
+          "nos": 46849,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e7",
+            "f8"
+          ],
+          "nota": 159.8,
+          "profundidade": 8,
+          "nos": 53057,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f6",
+            "e5"
+          ],
+          "nota": -53,
+          "profundidade": 7,
+          "nos": 36653,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f8",
+            "g7"
+          ],
+          "nota": 157.8,
+          "profundidade": 8,
+          "nos": 51649,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c5",
+            "d4"
+          ],
+          "nota": -50,
+          "profundidade": 7,
+          "nos": 33217,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g7",
+            "f6"
+          ],
+          "nota": 160.8,
+          "profundidade": 9,
+          "nos": 59969,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e5",
+            "f4"
+          ],
+          "nota": -50,
+          "profundidade": 8,
+          "nos": 39681,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f6",
+            "g5"
+          ],
+          "nota": 20.840005681454183,
+          "profundidade": 9,
+          "nos": 60545,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "d4",
+            "c3"
+          ],
+          "nota": 3,
+          "profundidade": 8,
+          "nos": 34625,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e1",
+            "f2"
+          ],
+          "nota": 17.840005681454183,
+          "profundidade": 8,
+          "nos": 52737,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "g1"
+          ],
+          "nota": -3,
+          "profundidade": 11,
+          "nos": 75009,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g5",
+            "e3"
+          ],
+          "nota": 14.681081622591263,
+          "profundidade": 10,
+          "nos": 111169,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c3",
+            "b2"
+          ],
+          "nota": -3,
+          "profundidade": 9,
+          "nos": 72001,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e3",
+            "d4"
+          ],
+          "nota": 28.6448317690825,
+          "profundidade": 9,
+          "nos": 168897,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b2",
+            "c1"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 54017,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d4",
+            "c3"
+          ],
+          "nota": 26.861468933388764,
+          "profundidade": 9,
+          "nos": 95425,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g1",
+            "f2"
+          ],
+          "nota": -3,
+          "profundidade": 8,
+          "nos": 22401,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c7",
+            "d6"
+          ],
+          "nota": 11.264692014672253,
+          "profundidade": 8,
+          "nos": 75585,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e1"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 28929,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "b8",
+            "c7"
+          ],
+          "nota": 12.953421255427909,
+          "profundidade": 8,
+          "nos": 82625,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "h2",
+            "g3"
+          ],
+          "nota": 0,
+          "profundidade": 7,
+          "nos": 25409,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "a3",
+            "b4"
+          ],
+          "nota": 16.42147034301233,
+          "profundidade": 7,
+          "nos": 67009,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c1",
+            "d2"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 26497,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d6",
+            "e5"
+          ],
+          "nota": 11.745557085956754,
+          "profundidade": 8,
+          "nos": 64641,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g3",
+            "f2"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 18625,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e5",
+            "f4"
+          ],
+          "nota": 13.149647595747819,
+          "profundidade": 8,
+          "nos": 75393,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e3"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 23361,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f4",
+            "g3"
+          ],
+          "nota": 10.786810897003473,
+          "profundidade": 11,
+          "nos": 112321,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "f2"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 29249,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g3",
+            "f4"
+          ],
+          "nota": 17.840598207451638,
+          "profundidade": 9,
+          "nos": 70977,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e3"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 31617,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f4",
+            "g3"
+          ],
+          "nota": 10.786810897003473,
+          "profundidade": 11,
+          "nos": 116865,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "f2"
+          ],
+          "nota": 0,
+          "profundidade": 10,
+          "nos": 29505,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g3",
+            "h4"
+          ],
+          "nota": 17.840598207451638,
+          "profundidade": 9,
+          "nos": 68609,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e3"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 31489,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h4",
+            "g5"
+          ],
+          "nota": 6.0,
+          "profundidade": 10,
+          "nos": 78913,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "f2"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 23425,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g5",
+            "h4"
+          ],
+          "nota": 11.264692014672253,
+          "profundidade": 8,
+          "nos": 70785,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e3"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 22145,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h4",
+            "g5"
+          ],
+          "nota": 6.0,
+          "profundidade": 10,
+          "nos": 83521,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "f2"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 20097,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c7",
+            "d6"
+          ],
+          "nota": 10.727852380479586,
+          "profundidade": 8,
+          "nos": 73281,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e3"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 16705,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d6",
+            "c5"
+          ],
+          "nota": 18.66872384884577,
+          "profundidade": 9,
+          "nos": 67521,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "f2"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 19585,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g5",
+            "h4"
+          ],
+          "nota": 10.727852380479586,
+          "profundidade": 8,
+          "nos": 60161,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "d2",
+            "e3"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 16641,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h4",
+            "g5"
+          ],
+          "nota": 16.960263047458984,
+          "profundidade": 9,
+          "nos": 64641,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "d2"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 18945,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c5",
+            "d6"
+          ],
+          "nota": 10.727852380479586,
+          "profundidade": 8,
+          "nos": 67905,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e3"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 20801,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d6",
+            "e7"
+          ],
+          "nota": 3.0940917005368807,
+          "profundidade": 10,
+          "nos": 112257,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "f2"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 25345,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g5",
+            "h4"
+          ],
+          "nota": 11.264692014672253,
+          "profundidade": 8,
+          "nos": 64065,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e3"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 24321,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h4",
+            "g5"
+          ],
+          "nota": 3.0940917005368807,
+          "profundidade": 10,
+          "nos": 84289,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "f2"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 21697,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g5",
+            "h4"
+          ],
+          "nota": 9.432459384487148,
+          "profundidade": 8,
+          "nos": 66369,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e3"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 29825,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h4",
+            "g3"
+          ],
+          "nota": 8.46169966489383,
+          "profundidade": 9,
+          "nos": 59073,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "f2"
+          ],
+          "nota": 0,
+          "profundidade": 10,
+          "nos": 31041,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g3",
+            "h2"
+          ],
+          "nota": 6.741347924811575,
+          "profundidade": 10,
+          "nos": 74113,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e3"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 22593,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h2",
+            "g1"
+          ],
+          "nota": 8.672200749424537,
+          "profundidade": 9,
+          "nos": 67265,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "d4"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 24257,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c3",
+            "e5"
+          ],
+          "nota": -2.6532405051679477,
+          "profundidade": 12,
+          "nos": 160771,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a5",
+            "c3"
+          ],
+          "nota": 0,
+          "profundidade": 11,
+          "nos": 77633,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g1",
+            "h2"
+          ],
+          "nota": 6.362633606865469,
+          "profundidade": 9,
+          "nos": 154369,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c3",
+            "b2"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 62209,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h2",
+            "g3"
+          ],
+          "nota": 0.0,
+          "profundidade": 8,
+          "nos": 195073,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b2",
+            "a1"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 59713,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g3",
+            "f4"
+          ],
+          "nota": 1.076667592996456,
+          "profundidade": 7,
+          "nos": 59585,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "d2",
+            "c3"
+          ],
+          "nota": 0,
+          "profundidade": 7,
+          "nos": 8641,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f4",
+            "e3"
+          ],
+          "nota": 2.9059082994631193,
+          "profundidade": 8,
+          "nos": 54849,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c3",
+            "b4"
+          ],
+          "nota": 0,
+          "profundidade": 7,
+          "nos": 13633,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e5",
+            "f4"
+          ],
+          "nota": 14.883330934834898,
+          "profundidade": 7,
+          "nos": 55489,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b4",
+            "a5"
+          ],
+          "nota": 0,
+          "profundidade": 7,
+          "nos": 7489,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e7",
+            "d6"
+          ],
+          "nota": 10.42147034301233,
+          "profundidade": 8,
+          "nos": 54593,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a5",
+            "b6"
+          ],
+          "nota": 0,
+          "profundidade": 7,
+          "nos": 15233,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f4",
+            "e5"
+          ],
+          "nota": 20.032379721465407,
+          "profundidade": 8,
+          "nos": 63297,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b6",
+            "a7"
+          ],
+          "nota": 0,
+          "profundidade": 7,
+          "nos": 11201,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e5",
+            "d4"
+          ],
+          "nota": 24.639073673213023,
+          "profundidade": 8,
+          "nos": 65089,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b8"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 19265,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d4",
+            "c3"
+          ],
+          "nota": 35.22153234514016,
+          "profundidade": 8,
+          "nos": 72641,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "a7"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 19649,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d6",
+            "c5"
+          ],
+          "nota": 42.11982815716241,
+          "profundidade": 8,
+          "nos": 61697,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b8"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 17665,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c5",
+            "d4"
+          ],
+          "nota": 35.22153234514016,
+          "profundidade": 8,
+          "nos": 65665,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "a7"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 15809,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d4",
+            "c5"
+          ],
+          "nota": 49.875373684468556,
+          "profundidade": 9,
+          "nos": 73153,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b8"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 19265,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c5",
+            "d4"
+          ],
+          "nota": 35.22153234514016,
+          "profundidade": 8,
+          "nos": 69121,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "a7"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 17409,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d4",
+            "e5"
+          ],
+          "nota": 49.875373684468556,
+          "profundidade": 9,
+          "nos": 60097,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b8"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 17985,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e5",
+            "f4"
+          ],
+          "nota": 35.22153234514016,
+          "profundidade": 8,
+          "nos": 60929,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "a7"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 15553,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f4",
+            "e5"
+          ],
+          "nota": 42.11982815716241,
+          "profundidade": 8,
+          "nos": 61953,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b8"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 15233,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e5",
+            "f6"
+          ],
+          "nota": 35.22153234514016,
+          "profundidade": 8,
+          "nos": 58305,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "a7"
+          ],
+          "nota": 0,
+          "profundidade": 7,
+          "nos": 16641,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f6",
+            "e7"
+          ],
+          "nota": 42.11982815716241,
+          "profundidade": 8,
+          "nos": 50817,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b8"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 17537,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e7",
+            "f6"
+          ],
+          "nota": 35.22153234514016,
+          "profundidade": 8,
+          "nos": 67009,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "a7"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 16769,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f6",
+            "e7"
+          ],
+          "nota": 42.11982815716241,
+          "profundidade": 8,
+          "nos": 51329,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b8"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 18241,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e7",
+            "d8"
+          ],
+          "nota": 35.22153234514016,
+          "profundidade": 8,
+          "nos": 68737,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "a7"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 14721,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d8",
+            "c7"
+          ],
+          "nota": 49.875373684468556,
+          "profundidade": 9,
+          "nos": 58497,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b8"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 17985,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c7",
+            "b6"
+          ],
+          "nota": 42.11982815716241,
+          "profundidade": 10,
+          "nos": 62913,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "a7"
+          ],
+          "nota": 0,
+          "profundidade": 10,
+          "nos": 20673,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "b6",
+            "a5"
+          ],
+          "nota": 35.22153234514016,
+          "profundidade": 10,
+          "nos": 65793,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b8"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 12033,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "a5",
+            "b6"
+          ],
+          "nota": 41.12424003815576,
+          "profundidade": 9,
+          "nos": 61121,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "a7"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 13505,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "b6",
+            "c7"
+          ],
+          "nota": 31.801735854324082,
+          "profundidade": 10,
+          "nos": 65473,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b8"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 15617,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c7",
+            "d6"
+          ],
+          "nota": 41.12424003815576,
+          "profundidade": 9,
+          "nos": 63361,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "a7"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 10241,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e3",
+            "f4"
+          ],
+          "nota": 34.89456816478996,
+          "profundidade": 8,
+          "nos": 47873,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b8"
+          ],
+          "nota": 0,
+          "profundidade": 7,
+          "nos": 9217,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        }
+      ]
+    },
+    {
+      "numero": 2,
+      "semente": 20261010,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 70,
+      "profundidade_media_ia": 9.8,
+      "profundidade_media_computador": 9.914285714285715,
+      "jogadas": [
+        {
+          "vez": "V",
+          "caminho": [
+            "c3",
+            "b4"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 23809,
+          "alternativas": 2,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f6",
+            "e5"
+          ],
+          "nota": -4.811263327301712,
+          "profundidade": 8,
+          "nos": 23361,
+          "alternativas": 7,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "b2",
+            "c3"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 21377,
+          "alternativas": 3,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g7",
+            "f6"
+          ],
+          "nota": -5.206980056448866,
+          "profundidade": 8,
+          "nos": 25089,
+          "alternativas": 2,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g3",
+            "h4"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 21505,
+          "alternativas": 4,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b6",
+            "a5"
+          ],
+          "nota": -1.3493152472029806,
+          "profundidade": 8,
+          "nos": 23553,
+          "alternativas": 5,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h2",
+            "g3"
+          ],
+          "nota": 0,
+          "profundidade": 8,
+          "nos": 21505,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a7",
+            "b6"
+          ],
+          "nota": 0.0,
+          "profundidade": 8,
+          "nos": 24897,
+          "alternativas": 2,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c1",
+            "b2"
+          ],
+          "nota": 0,
+          "profundidade": 9,
+          "nos": 22209,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b6",
+            "c5"
+          ],
+          "nota": 15.269422410404937,
+          "profundidade": 11,
+          "nos": 28161,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g1",
+            "h2"
+          ],
+          "nota": -3,
+          "profundidade": 12,
+          "nos": 30546,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f8",
+            "g7"
+          ],
+          "nota": 24.59645967461556,
+          "profundidade": 11,
+          "nos": 30977,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g3",
+            "f4"
+          ],
+          "nota": 0,
+          "profundidade": 12,
+          "nos": 16775,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e5",
+            "g3"
+          ],
+          "nota": 10.062928473721964,
+          "profundidade": 12,
+          "nos": 8775,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h2",
+            "f4"
+          ],
+          "nota": -6,
+          "profundidade": 12,
+          "nos": 19292,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f6",
+            "e5"
+          ],
+          "nota": 16.345638849463338,
+          "profundidade": 12,
+          "nos": 26671,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f4",
+            "g5"
+          ],
+          "nota": -6,
+          "profundidade": 12,
+          "nos": 25981,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "h6",
+            "f4"
+          ],
+          "nota": 44.36575133281368,
+          "profundidade": 12,
+          "nos": 22732,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e3",
+            "g5"
+          ],
+          "nota": -6,
+          "profundidade": 11,
+          "nos": 31041,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e7",
+            "f6"
+          ],
+          "nota": 44.36575133281368,
+          "profundidade": 10,
+          "nos": 37249,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g5",
+            "e7"
+          ],
+          "nota": -109,
+          "profundidade": 12,
+          "nos": 12725,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "d8",
+            "f6"
+          ],
+          "nota": 144.56691404545688,
+          "profundidade": 12,
+          "nos": 23375,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "h4",
+            "g5"
+          ],
+          "nota": -112,
+          "profundidade": 12,
+          "nos": 34100,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f6",
+            "h4"
+          ],
+          "nota": 171.13877930234477,
+          "profundidade": 12,
+          "nos": 18269,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f2",
+            "e3"
+          ],
+          "nota": -112,
+          "profundidade": 12,
+          "nos": 33474,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c7",
+            "b6"
+          ],
+          "nota": 166.0,
+          "profundidade": 11,
+          "nos": 43137,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c3",
+            "d4"
+          ],
+          "nota": -115,
+          "profundidade": 12,
+          "nos": 11010,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e5",
+            "c3"
+          ],
+          "nota": 162.32294502827267,
+          "profundidade": 12,
+          "nos": 11418,
+          "alternativas": 1,
+          "tempo_limite_s": 3.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "b2",
+            "d4"
+          ],
+          "nota": -168,
+          "profundidade": 12,
+          "nos": 15696,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a5",
+            "c3"
+          ],
+          "nota": 249.52809819766205,
+          "profundidade": 12,
+          "nos": 26353,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d2",
+            "b4"
+          ],
+          "nota": -165,
+          "profundidade": 11,
+          "nos": 37249,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "g7",
+            "f6"
+          ],
+          "nota": 253.81966680950325,
+          "profundidade": 11,
+          "nos": 49345,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "b4",
+            "a5"
+          ],
+          "nota": -165,
+          "profundidade": 11,
+          "nos": 38593,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b8",
+            "c7"
+          ],
+          "nota": 251.99715322795893,
+          "profundidade": 10,
+          "nos": 51521,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e3",
+            "f4"
+          ],
+          "nota": -218,
+          "profundidade": 11,
+          "nos": 34625,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c5",
+            "e3"
+          ],
+          "nota": 284.08132900229634,
+          "profundidade": 12,
+          "nos": 26697,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f4",
+            "g5"
+          ],
+          "nota": -218,
+          "profundidade": 11,
+          "nos": 41217,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f6",
+            "e5"
+          ],
+          "nota": 304.2070292794225,
+          "profundidade": 11,
+          "nos": 59905,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "g5",
+            "f6"
+          ],
+          "nota": -224,
+          "profundidade": 10,
+          "nos": 36097,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "f2"
+          ],
+          "nota": 279.7446076496463,
+          "profundidade": 10,
+          "nos": 50625,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e1",
+            "g3"
+          ],
+          "nota": -215,
+          "profundidade": 12,
+          "nos": 33838,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "h4",
+            "f2"
+          ],
+          "nota": 306.5396240688953,
+          "profundidade": 12,
+          "nos": 50498,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "a1",
+            "b2"
+          ],
+          "nota": -215,
+          "profundidade": 10,
+          "nos": 41729,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e5",
+            "d4"
+          ],
+          "nota": 308.04656487057935,
+          "profundidade": 10,
+          "nos": 54209,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "f6",
+            "e7"
+          ],
+          "nota": -218,
+          "profundidade": 10,
+          "nos": 36673,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "f2",
+            "e1"
+          ],
+          "nota": 313.9219919737864,
+          "profundidade": 10,
+          "nos": 63937,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e7",
+            "d8"
+          ],
+          "nota": -218,
+          "profundidade": 9,
+          "nos": 40833,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e1",
+            "d2"
+          ],
+          "nota": 410.2054218753699,
+          "profundidade": 10,
+          "nos": 67201,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d8",
+            "e7"
+          ],
+          "nota": -230,
+          "profundidade": 11,
+          "nos": 42177,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "d6",
+            "c5"
+          ],
+          "nota": 354.12447113938424,
+          "profundidade": 10,
+          "nos": 64833,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "e7",
+            "d6"
+          ],
+          "nota": -230,
+          "profundidade": 11,
+          "nos": 42881,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c7",
+            "e5"
+          ],
+          "nota": 460.0,
+          "profundidade": 12,
+          "nos": 50952,
+          "alternativas": 1,
+          "tempo_limite_s": 4.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "a5",
+            "c7"
+          ],
+          "nota": -286,
+          "profundidade": 11,
+          "nos": 63169,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "d2",
+            "c3"
+          ],
+          "nota": 475.7313513636871,
+          "profundidade": 11,
+          "nos": 123521,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c7",
+            "b8"
+          ],
+          "nota": -286,
+          "profundidade": 12,
+          "nos": 9885,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c3",
+            "a1"
+          ],
+          "nota": 460.0,
+          "profundidade": 12,
+          "nos": 18298,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "b8",
+            "c7"
+          ],
+          "nota": -286,
+          "profundidade": 12,
+          "nos": 24804,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "a1",
+            "b2"
+          ],
+          "nota": 477.0,
+          "profundidade": 12,
+          "nos": 76765,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "c7",
+            "d6"
+          ],
+          "nota": -283,
+          "profundidade": 10,
+          "nos": 46145,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "b2",
+            "c1"
+          ],
+          "nota": 9989,
+          "profundidade": 10,
+          "nos": 21308,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "d6",
+            "b4"
+          ],
+          "nota": -9990,
+          "profundidade": 9,
+          "nos": 3769,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "d4",
+            "c3"
+          ],
+          "nota": 9991,
+          "profundidade": 8,
+          "nos": 4832,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "b4",
+            "d2"
+          ],
+          "nota": -9992,
+          "profundidade": 7,
+          "nos": 202,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c1",
+            "e3"
+          ],
+          "nota": 9993,
+          "profundidade": 6,
+          "nos": 222,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "a3",
+            "b4"
+          ],
+          "nota": -9994,
+          "profundidade": 5,
+          "nos": 188,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "e3",
+            "d4"
+          ],
+          "nota": 9995,
+          "profundidade": 4,
+          "nos": 213,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "b4",
+            "a5"
+          ],
+          "nota": -9996,
+          "profundidade": 3,
+          "nos": 25,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "d4",
+            "c5"
+          ],
+          "nota": 9997,
+          "profundidade": 2,
+          "nos": 16,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        },
+        {
+          "vez": "V",
+          "caminho": [
+            "a5",
+            "b6"
+          ],
+          "nota": -9998,
+          "profundidade": 1,
+          "nos": 2,
+          "alternativas": 1,
+          "tempo_limite_s": 1.5
+        },
+        {
+          "vez": "P",
+          "caminho": [
+            "c5",
+            "a7"
+          ],
+          "nota": 9999,
+          "profundidade": 1,
+          "nos": 1,
+          "alternativas": 1,
+          "tempo_limite_s": 5.0
+        }
+      ]
+    }
+  ]
+}

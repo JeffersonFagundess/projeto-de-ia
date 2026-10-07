@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "projeto-de-ia"
+version = "3.3.0"
+description = "Duelo de damas com assistência de Machine Learning para um jogador"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy==2.5.3",
+    "pandas==3.0.6",
+    "scikit-learn==1.9.1",
+    "matplotlib==3.11.2",
+    "joblib==1.6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "unlzw3>=0.2,<1"]
+
+[tool.setuptools.packages.find]
+include = ["projeto_ia*"]
+
+[tool.setuptools.package-data]
+"projeto_ia.ui" = ["assets/*.ico", "assets/*.png"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

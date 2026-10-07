@@ -1,0 +1,183 @@
+{
+  "protocolo": "12 partidas por política, cores alternadas, 4 lances iniciais aleatórios, até 160 lances adicionais; ML+busca com 50 ms e profundidade máxima 4",
+  "semente": 20261004,
+  "limites": "Ensaio pequeno contra programas simples; tempo limitado torna o resultado dependente do hardware. Não estima vitória contra humanos nem isola o efeito do ML da busca.",
+  "resumo": {
+    "aleatorio": {
+      "vitoria": 12
+    },
+    "material": {
+      "vitoria": 12
+    }
+  },
+  "partidas": [
+    {
+      "politica": "aleatorio",
+      "partida": 0,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 45
+    },
+    {
+      "politica": "aleatorio",
+      "partida": 1,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 48
+    },
+    {
+      "politica": "aleatorio",
+      "partida": 2,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 45
+    },
+    {
+      "politica": "aleatorio",
+      "partida": 3,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 46
+    },
+    {
+      "politica": "aleatorio",
+      "partida": 4,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 39
+    },
+    {
+      "politica": "aleatorio",
+      "partida": 5,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 50
+    },
+    {
+      "politica": "aleatorio",
+      "partida": 6,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 63
+    },
+    {
+      "politica": "aleatorio",
+      "partida": 7,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 46
+    },
+    {
+      "politica": "aleatorio",
+      "partida": 8,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 97
+    },
+    {
+      "politica": "aleatorio",
+      "partida": 9,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 44
+    },
+    {
+      "politica": "aleatorio",
+      "partida": 10,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 51
+    },
+    {
+      "politica": "aleatorio",
+      "partida": 11,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 50
+    },
+    {
+      "politica": "material",
+      "partida": 0,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 45
+    },
+    {
+      "politica": "material",
+      "partida": 1,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 46
+    },
+    {
+      "politica": "material",
+      "partida": 2,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 39
+    },
+    {
+      "politica": "material",
+      "partida": 3,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 42
+    },
+    {
+      "politica": "material",
+      "partida": 4,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 43
+    },
+    {
+      "politica": "material",
+      "partida": 5,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 78
+    },
+    {
+      "politica": "material",
+      "partida": 6,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 45
+    },
+    {
+      "politica": "material",
+      "partida": 7,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 38
+    },
+    {
+      "politica": "material",
+      "partida": 8,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 43
+    },
+    {
+      "politica": "material",
+      "partida": 9,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 58
+    },
+    {
+      "politica": "material",
+      "partida": 10,
+      "assistido": "V",
+      "resultado": "vitoria",
+      "turnos": 43
+    },
+    {
+      "politica": "material",
+      "partida": 11,
+      "assistido": "P",
+      "resultado": "vitoria",
+      "turnos": 40
+    }
+  ]
+}

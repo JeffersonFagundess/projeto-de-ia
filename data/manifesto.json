@@ -1,0 +1,32 @@
+{
+  "versao": 1,
+  "total_linhas": 69161,
+  "observacao": "Bases de tarefas distintas: a soma não é o número de exemplos usados para treinar uma única rede.",
+  "bases": {
+    "finais": {
+      "arquivo": "data/raw/finais/finais_damas.csv",
+      "linhas": 61504,
+      "sha256": "bf34e7ca3d63a7e578bbdeb5c7ecc5f931233510dcc055de2bd194e8e3a5b221",
+      "tarefa": "Classificação exata de finais de até três damas",
+      "uso_atual": "Consulta pelo assistente somente quando restam até três damas",
+      "classes": {
+        "draw": 4276,
+        "loss": 26252,
+        "win": 30976
+      }
+    },
+    "partidas_completas": {
+      "arquivo": "data/raw/partidas_completas/posicoes_completas.csv",
+      "linhas": 7657,
+      "sha256": "5816a38b625ab4b751f9d547cc454699375ee45a231b6997ac22b713ecc9014f",
+      "tarefa": "Regressão de vantagem em partidas de 2 a 24 peças",
+      "uso_atual": "Treino da rede neural do assistente",
+      "partidas": 240,
+      "divisao": {
+        "teste": 1532,
+        "treino": 4885,
+        "validacao": 1240
+      }
+    }
+  }
+}

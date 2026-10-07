@@ -1,0 +1,102 @@
+{
+  "dataset": "Finais próprios de damas inglesas com até três reis",
+  "registros": 61504,
+  "auditoria": {
+    "registros_originais": 61504,
+    "registros_utilizados": 61504,
+    "duplicados_removidos": 0,
+    "ausentes": 0
+  },
+  "features": 36,
+  "target": "resultado da pessoa que joga agora",
+  "classes": {
+    "win": 30976,
+    "loss": 26252,
+    "draw": 4276
+  },
+  "grupos_de_simetria": 7834,
+  "divisao": {
+    "treino": 39388,
+    "validacao": 9852,
+    "teste": 12264
+  },
+  "semente": 42,
+  "avaliacao_validacao": {
+    "regressao_logistica": {
+      "acuracia": 0.9302,
+      "f1_macro": 0.7923
+    },
+    "floresta_aleatoria": {
+      "acuracia": 0.9321,
+      "f1_macro": 0.8026
+    },
+    "floresta_balanceada": {
+      "acuracia": 0.9536,
+      "f1_macro": 0.8956
+    }
+  },
+  "modelo_escolhido": "floresta_balanceada",
+  "baseline_teste": {
+    "acuracia": 0.5036,
+    "f1_macro": 0.2233
+  },
+  "modelo_teste": {
+    "acuracia": 0.941,
+    "f1_macro": 0.8499
+  },
+  "matriz_confusao": [
+    [
+      5928,
+      60,
+      188
+    ],
+    [
+      0,
+      5070,
+      178
+    ],
+    [
+      16,
+      282,
+      542
+    ]
+  ],
+  "ordem_matriz": [
+    "win",
+    "loss",
+    "draw"
+  ],
+  "relatorio_classes": {
+    "win": {
+      "precision": 0.9973082099596231,
+      "recall": 0.9598445595854922,
+      "f1-score": 0.9782178217821782,
+      "support": 6176.0
+    },
+    "loss": {
+      "precision": 0.9368070953436807,
+      "recall": 0.9660823170731707,
+      "f1-score": 0.9512195121951219,
+      "support": 5248.0
+    },
+    "draw": {
+      "precision": 0.5969162995594713,
+      "recall": 0.6452380952380953,
+      "f1-score": 0.620137299771167,
+      "support": 840.0
+    },
+    "accuracy": 0.9409654272667971,
+    "macro avg": {
+      "precision": 0.843677201620925,
+      "recall": 0.8570549906322528,
+      "f1-score": 0.8498582112494891,
+      "support": 12264.0
+    },
+    "weighted avg": {
+      "precision": 0.9439945232146302,
+      "recall": 0.9409654272667971,
+      "f1-score": 0.9421386659437796,
+      "support": 12264.0
+    }
+  }
+}

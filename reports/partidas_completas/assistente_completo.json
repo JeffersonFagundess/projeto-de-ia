@@ -1,0 +1,45 @@
+{
+  "origem": "Partidas legais simuladas; rótulos de busca de profundidade 2 com extensão de capturas",
+  "registros": 7657,
+  "partidas": 240,
+  "semente_dados": 2026,
+  "semente_modelo": 42,
+  "features": [
+    "vez_peoes",
+    "vez_damas",
+    "vez_avanco",
+    "vez_centro",
+    "vez_bordas",
+    "vez_retaguarda",
+    "vez_protegidas",
+    "vez_ameacadas",
+    "rival_peoes",
+    "rival_damas",
+    "rival_avanco",
+    "rival_centro",
+    "rival_bordas",
+    "rival_retaguarda",
+    "rival_protegidas",
+    "rival_ameacadas"
+  ],
+  "pecas_min": 2,
+  "pecas_max": 24,
+  "divisao": {
+    "treino": 4885,
+    "validacao": 1240,
+    "teste": 1532
+  },
+  "validacao_mae": {
+    "ridge": 105.14037340569722,
+    "rede_32": 94.72626827256153,
+    "rede_48_24": 93.33347679300094
+  },
+  "modelo_escolhido": "rede_48_24",
+  "teste": {
+    "mae": 95.99921620903604,
+    "r2": 0.8546195745010614,
+    "baseline_mae": 322.59320413906266,
+    "sinal_correto": 0.8857702349869452
+  },
+  "limitacao": "Imita uma busca limitada. Nota de vantagem, não probabilidade de vitória nem solução exata."
+}
