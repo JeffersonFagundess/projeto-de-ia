@@ -31,6 +31,8 @@ Medição local em 2 de novembro de 2026; os números variam conforme o hardware
 | Materializar o mapa operacional de 61.504 notas do NPZ | 0,065 s |
 | Materializar 57.228 distâncias pela API de auditoria | 0,031 s |
 | Telemetria na análise aprofundada | 374 → 86.529 posições em cerca de 700 ms, sem bloquear a janela |
+| Gerador antes da separação captura/movimento | 71.918 posições/s em 4.073 posições de referência |
+| Gerador em duas fases | 80.359 posições/s no mesmo conjunto, ganho de aproximadamente 11,7% |
 
 O tempo de 3 a 8 segundos da sugestão é hoje um orçamento intencional de busca,
 não um congelamento da janela. O usuário pode continuar interagindo e cancelar.
@@ -49,6 +51,23 @@ aproximadamente 10%. Reproduza a medição com:
 ```powershell
 python -m tools.perfilar_busca --segundos 1
 ```
+
+## Peças bloqueadas e geração em duas fases
+
+Uma peça sem lance no estado atual não pode ser removida do tabuleiro: ela ainda
+ocupa uma casa, bloqueia diagonais, protege outras peças, pode ser capturada e
+pode voltar a se mover após uma alteração da posição. Em 2.783 posições de
+partidas simuladas, 25,9% de todas as peças estavam fisicamente bloqueadas, mas
+somente 2,2% das damas estavam nessa condição. O gerador já não cria ramos para
+elas; o custo restante é descobrir que não possuem destino.
+
+`search_board.py` agora procura capturas para todas as peças antes de construir
+movimentos simples. Como a captura é obrigatória, isso evita criar objetos que
+seriam descartados quando uma peça posterior pudesse capturar. A implementação
+foi comparada com as regras públicas em milhares de posições e preserva
+integralmente os lances, capturas múltiplas e promoções. No perfil de um segundo,
+a busca passou de 9.089 para 9.537 nós e alcançou uma profundidade completa a
+mais nessa execução; os resultados variam conforme o hardware.
 
 ## Armazenamento aplicado
 

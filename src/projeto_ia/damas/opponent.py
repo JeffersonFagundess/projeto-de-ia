@@ -3,6 +3,7 @@
 from collections import Counter
 from dataclasses import dataclass
 from functools import lru_cache
+from math import exp
 from time import monotonic
 
 from .full_game import movimentos
@@ -32,6 +33,16 @@ class Analise:
     nos: int
     continuacao: tuple
     alternativas: int = 1
+    opcoes: tuple = ()
+    respostas: tuple = ()
+
+
+@dataclass(frozen=True)
+class OpcaoAnalise:
+    lance: object
+    nota: float
+    confianca: int
+    exata: bool = True
 
 
 @dataclass(frozen=True, slots=True)
@@ -73,6 +84,8 @@ def analisar(estado, segundos=1.5, profundidade_maxima=12, avaliador=avaliar,
     ultima_nota = 0
     ultima_linha = ()
     ultimo_pulso = monotonic()
+    ultimas_notas = []
+    respostas_por_posicao = {}
 
     def informar(profundidade, nota, linha, alternativas):
         """Publica telemetria sem permitir que a interface afete a busca."""
@@ -200,6 +213,7 @@ def analisar(estado, segundos=1.5, profundidade_maxima=12, avaliador=avaliar,
                     lance == matadoras.get(ply),historico_ordem[posicao.vez,lance.origem,lance.destino])
 
         valor,linha = -float("inf"),()
+        respostas_no = [] if ply == 1 else None
         for lance in sorted(lances,key=ordem,reverse=True):
             try:
                 nota,filhos = descendente(
@@ -214,6 +228,8 @@ def analisar(estado, segundos=1.5, profundidade_maxima=12, avaliador=avaliar,
                 )
                 raise
             nota = -nota
+            if respostas_no is not None:
+                respostas_no.append((nota,lance))
             if nota > valor:
                 valor,linha = nota,(lance,)+filhos
             alfa = max(alfa,valor)
@@ -225,6 +241,18 @@ def analisar(estado, segundos=1.5, profundidade_maxima=12, avaliador=avaliar,
         if usar_transposicoes and (len(tabela) < 60000 or k in tabela):
             tipo = "superior" if valor <= alfa_original else "inferior" if valor >= beta_original else "exato"
             tabela[k] = Registro(profundidade,guardar_nota(valor,ply),tipo,linha)
+        if respostas_no is not None:
+            # A mesma posição pode reaparecer depois com uma janela estreita e
+            # sofrer corte logo na primeira resposta. Preserve a amostra mais
+            # completa de cada profundidade para a previsão mostrada na UI. A
+            # busca seguinte pode ser interrompida sem apagar o nível pronto.
+            chave_respostas = (posicao,profundidade_atual)
+            anterior_respostas = respostas_por_posicao.get(chave_respostas)
+            if (
+                anterior_respostas is None
+                or len(respostas_no) > len(anterior_respostas)
+            ):
+                respostas_por_posicao[chave_respostas] = tuple(respostas_no)
         return concluir(valor,linha,"corte" if alfa >= beta else "expandido")
 
     _melhor,nota_melhor,profundidade_feita,linha_melhor,quantidade = opcoes[0],0,0,(opcoes[0],),1
@@ -249,6 +277,7 @@ def analisar(estado, segundos=1.5, profundidade_maxima=12, avaliador=avaliar,
             nota_melhor,_melhor,linha_melhor,_ = gerador.choice(candidatas) if gerador is not None else notas[0]
             quantidade = len(candidatas)
             profundidade_feita = profundidade
+            ultimas_notas = notas
             opcoes = [l for _,l,_,_ in notas]
             ultima_nota, ultima_linha = nota_melhor, linha_melhor
             informar(profundidade_feita, nota_melhor, linha_melhor, quantidade)
@@ -257,17 +286,90 @@ def analisar(estado, segundos=1.5, profundidade_maxima=12, avaliador=avaliar,
         except TimeoutError:
             break
 
-    # Converte somente a linha escolhida para objetos usados pela interface.
+    def converter(posicao,lance_busca):
+        return next((
+            lance for lance in movimentos(posicao)
+            if lance.caminho[0] == lance_busca.origem
+            and lance.caminho[-1] == lance_busca.destino
+            and compactar(lance.proximo) == lance_busca.proximo
+        ),None)
+
+    def confiancas(valores):
+        """Normaliza preferência relativa; não representa chance de vitória."""
+        if not valores:
+            return ()
+        melhor = max(valores)
+        pior = min(valores)
+        # A avaliação estratégica pode usar escalas diferentes (heurística ou
+        # modelo aprendido). Uma temperatura adaptativa mantém a comparação
+        # legível sem converter a nota em uma falsa probabilidade de vitória.
+        temperatura = max(1.0,min(60.0,(melhor-pior)/2.5))
+        pesos = [
+            exp(max(-20,min(0,(valor-melhor)/temperatura)))
+            for valor in valores
+        ]
+        total = sum(pesos)
+        brutos = [peso*100/total for peso in pesos]
+        inteiros = [int(valor) for valor in brutos]
+        restantes = 100-sum(inteiros)
+        ordem = sorted(
+            range(len(brutos)),key=lambda i:brutos[i]-inteiros[i],reverse=True,
+        )
+        for indice in ordem[:restantes]:
+            inteiros[indice] += 1
+        return tuple(inteiros)
+
+    # Converte a linha e as alternativas somente depois que a busca termina.
     linha_publica = []
     atual = estado
     for lance in linha_melhor:
-        correspondente = next((l for l in movimentos(atual) if l.caminho[0] == lance.origem
-                               and l.caminho[-1] == lance.destino and compactar(l.proximo) == lance.proximo),None)
+        correspondente = converter(atual,lance)
         if correspondente is None:
             break
         linha_publica.append(correspondente)
         atual = correspondente.proximo
-    return Analise(linha_publica[0],nota_melhor,profundidade_feita,nos,tuple(linha_publica),quantidade)
+
+    opcoes_convertidas = []
+    for nota,lance,_linha,exata in ultimas_notas:
+        correspondente = converter(estado,lance)
+        if correspondente is not None:
+            opcoes_convertidas.append((correspondente,nota,exata))
+    if not opcoes_convertidas and linha_publica:
+        opcoes_convertidas.append((linha_publica[0],nota_melhor,True))
+    percentuais = confiancas([nota for _,nota,_ in opcoes_convertidas])
+    opcoes_publicas = tuple(
+        OpcaoAnalise(lance,nota,percentual,exata)
+        for (lance,nota,exata),percentual in zip(
+            opcoes_convertidas,percentuais,strict=True,
+        )
+    )
+
+    respostas_publicas = ()
+    if linha_publica:
+        registro = respostas_por_posicao.get((
+            compactar(linha_publica[0].proximo),profundidade_feita,
+        ))
+        if registro is not None:
+            convertidas = []
+            for nota,lance in registro:
+                correspondente = converter(linha_publica[0].proximo,lance)
+                if correspondente is not None:
+                    convertidas.append((correspondente,nota))
+            percentuais = confiancas([nota for _,nota in convertidas])
+            respostas_publicas = tuple(
+                OpcaoAnalise(lance,nota,percentual)
+                for (lance,nota),percentual in zip(
+                    convertidas,percentuais,strict=True,
+                )
+            )
+        if not respostas_publicas and len(linha_publica) > 1:
+            respostas_publicas = (
+                OpcaoAnalise(linha_publica[1],-nota_melhor,100),
+            )
+    return Analise(
+        linha_publica[0],nota_melhor,profundidade_feita,nos,
+        tuple(linha_publica),quantidade,opcoes_publicas,respostas_publicas,
+    )
 
 
 def escolher(estado, segundos=1.5, profundidade_maxima=12, **opcoes):

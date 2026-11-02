@@ -5,7 +5,7 @@ from collections import Counter
 
 from .endgame_table import avaliacao_exata, carregar_avaliacoes
 from .full_game import movimentos
-from .opponent import Analise, analisar, avaliar
+from .opponent import Analise, OpcaoAnalise, analisar, avaliar
 from .search_board import compactar
 from .strategy import carregar_assistente
 
@@ -46,7 +46,13 @@ def analisar_final_exato(estado, historico=(), sem_progresso=0):
         respostas = movimentos(lance.proximo)
         if respostas:
             linha.append(max(respostas,key=lambda opcao:nota(opcao,relogio,visitas)))
-    return Analise(lance,valor,0,len(opcoes),tuple(linha))
+    respostas = (
+        (OpcaoAnalise(linha[1],-valor,100),) if len(linha) > 1 else ()
+    )
+    return Analise(
+        lance,valor,0,len(opcoes),tuple(linha),
+        opcoes=(OpcaoAnalise(lance,valor,100),),respostas=respostas,
+    )
 
 
 def tempo_analise(estado,com_ajuda):
@@ -61,7 +67,10 @@ def analisar_turno(estado, com_ajuda, historico=(), sem_progresso=0,
                    cancelado=lambda:False, gerador=None,
                    segundos=None, profundidade_maxima=PROFUNDIDADE_MAXIMA,
                    variar=True, progresso=None, detalhe=None):
-    abertura = variar and len(historico) < 8
+    # A ajuda precisa apontar o lance mais bem avaliado para permanecer
+    # coerente com os percentuais exibidos. A variedade de abertura continua
+    # reservada ao computador, evitando partidas sempre idênticas.
+    abertura = variar and not com_ajuda and len(historico) < 8
     if com_ajuda and (len(estado.vermelhas)+len(estado.pretas) <= 7):
         carregar_avaliacoes()
     if com_ajuda and len(estado.vermelhas)+len(estado.pretas) <= 3 and len(estado.damas) == len(estado.vermelhas)+len(estado.pretas):

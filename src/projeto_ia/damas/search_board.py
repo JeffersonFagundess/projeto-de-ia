@@ -53,45 +53,70 @@ def gerar(tab):
     if not nossas or not rivais:
         return ()
     finais = TOPO if tab.vez else BASE
-    capturas,simples = [],[]
     ocupadas = nossas | rivais
+    capturas = []
+
+    def criar(origem,destino,restantes,quantidade,dama,outras):
+        bit_origem = 1 << origem
+        bit_destino = 1 << destino
+        removidas = rivais ^ restantes
+        reis = tab.damas & ~(bit_origem | removidas)
+        if dama or bit_destino & finais:
+            reis |= bit_destino
+        a = outras | bit_destino
+        novo = (TabuleiroBusca(a,restantes,reis,False) if tab.vez
+                else TabuleiroBusca(restantes,a,reis,True))
+        return LanceBusca(
+            novo,origem,destino,quantidade,bool(quantidade) or not dama,
+        )
+
+    def capturar(origem,atual,restantes,quantidade,dama,direcoes,outras):
+        if quantidade and not dama and (1 << atual) & finais:
+            capturas.append(
+                criar(origem,atual,restantes,quantidade,dama,outras),
+            )
+            return
+        encontrou = False
+        for direcao in direcoes:
+            meio = PASSOS[atual][direcao]
+            destino = SALTOS[atual][direcao]
+            if destino < 0 or not restantes & (1 << meio):
+                continue
+            bit_destino = 1 << destino
+            if (restantes | outras) & bit_destino:
+                continue
+            encontrou = True
+            capturar(
+                origem,destino,restantes ^ (1 << meio),quantidade+1,
+                dama,direcoes,outras,
+            )
+        if quantidade and not encontrou:
+            capturas.append(
+                criar(origem,atual,restantes,quantidade,dama,outras),
+            )
+
+    # Capturas são obrigatórias. Localizá-las primeiro evita construir lances
+    # simples que seriam descartados quando outra peça puder capturar.
+    for origem in indices(nossas):
+        bit_origem = 1 << origem
+        dama = bool(tab.damas & bit_origem)
+        direcoes = range(4) if dama else (0,1) if tab.vez else (2,3)
+        capturar(
+            origem,origem,rivais,0,dama,direcoes,nossas ^ bit_origem,
+        )
+    if capturas:
+        return tuple(capturas)
+
+    simples = []
     for origem in indices(nossas):
         bit_origem = 1 << origem
         dama = bool(tab.damas & bit_origem)
         direcoes = range(4) if dama else (0,1) if tab.vez else (2,3)
         outras = nossas ^ bit_origem
-
-        def criar(destino,restantes,quantidade):
-            bit_destino = 1 << destino
-            removidas = rivais ^ restantes
-            reis = (tab.damas & ~(bit_origem | removidas))
-            if dama or bit_destino & finais:
-                reis |= bit_destino
-            a = outras | bit_destino
-            novo = TabuleiroBusca(a,restantes,reis,False) if tab.vez else TabuleiroBusca(restantes,a,reis,True)
-            return LanceBusca(novo,origem,destino,quantidade,bool(quantidade) or not dama)
-
-        def capturar(atual,restantes,quantidade):
-            if quantidade and not dama and (1 << atual) & finais:
-                capturas.append(criar(atual,restantes,quantidade))
-                return
-            encontrou = False
-            for d in direcoes:
-                meio,destino = PASSOS[atual][d],SALTOS[atual][d]
-                if destino < 0 or not restantes & (1 << meio):
-                    continue
-                bit_destino = 1 << destino
-                if (restantes | outras) & bit_destino:
-                    continue
-                encontrou = True
-                capturar(destino,restantes ^ (1 << meio),quantidade+1)
-            if quantidade and not encontrou:
-                capturas.append(criar(atual,restantes,quantidade))
-
-        capturar(origem,rivais,0)
-        if not capturas:
-            for d in direcoes:
-                destino = PASSOS[origem][d]
-                if destino >= 0 and not ocupadas & (1 << destino):
-                    simples.append(criar(destino,rivais,0))
-    return tuple(capturas or simples)
+        for direcao in direcoes:
+            destino = PASSOS[origem][direcao]
+            if destino >= 0 and not ocupadas & (1 << destino):
+                simples.append(
+                    criar(origem,destino,rivais,0,dama,outras),
+                )
+    return tuple(simples)

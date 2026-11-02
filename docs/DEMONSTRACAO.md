@@ -14,11 +14,11 @@ Mostre os cartões **Com IA** e **Sem dicas**. A borda indica a vez de jogar.
 
 **2. Mostre como funciona — 30 segundos**
 
-Na sugestão inicial, mostre a seta e clique na **lâmpada**. A peça se move e a tela explica por que a jogada foi recomendada. O participante também pode ignorar a dica e escolher outro movimento legal.
+Na sugestão inicial, mostre o contorno na peça e a casa pulsando em ciano, então clique no ícone **%**. As casas passam a exibir a confiança relativa das jogadas; quando duas peças alcançam a mesma casa, aparece apenas a melhor rota, sem somar os valores. Passe o mouse sobre a origem ou um destino para abrir a explicação da comparação. Um pulso coral indica a resposta prevista do adversário. Explique que os números comparam alternativas da busca e não são probabilidade de vitória. Clique na **lâmpada** para aplicar a recomendação. O participante também pode ignorar a dica e escolher outro movimento legal.
 
 **3. Comece uma partida real — 1 minuto**
 
-Clique no ícone **+**. Há 12 peças de cada lado. Mostre o olho aberto e feche-o: a seta desaparece e a previsão do jogador é suspensa; a IA do computador continua ativa. Abra o olho novamente para recalcular a posição. O jogador 1 aceita a sugestão pela lâmpada ou clica na peça e numa casa verde. Ao passar a vez, a dica desaparece e o jogador 2 faz sua própria escolha. As casas verdes indicam movimentos permitidos para ambos; não são recomendações para o lado sem ajuda.
+Clique no ícone **+**. Há 12 peças de cada lado. Mostre o olho aberto e feche-o: os pulsos desaparecem e a previsão do jogador é suspensa; a IA do computador continua ativa. Abra o olho novamente para recalcular a posição. O jogador 1 aceita a sugestão pela lâmpada ou clica na peça e numa casa verde. Ao passar a vez, a dica desaparece e o jogador 2 faz sua própria escolha. As casas verdes indicam movimentos permitidos para ambos; não são recomendações para o lado sem ajuda.
 
 Abra o ícone de **gráfico** para mostrar a **Telemetria da busca**: os pontos e conexões animados representam posição, jogadas, respostas e escolha. O terminal registra a profundidade concluída, as posições avaliadas, a nota e a sequência prevista; não é um raciocínio inventado. Clique em **Detalhar caminho** para registrar cada nó e selecionar posições da árvore em páginas. A **lupa** amplia a busca para até 8 segundos sem gravar esse rastro completo. A sugestão automática usa de 3 a 5 segundos conforme o número de peças; o computador usa 1,5 segundo. Para uma comparação técnica com tempo igual, execute `python -m tools.avaliar_assistente --partidas 4 --segundos 1.5`.
 

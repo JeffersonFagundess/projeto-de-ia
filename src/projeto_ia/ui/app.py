@@ -45,6 +45,7 @@ class JanelaPrincipal:
         self.analisador = ServicoAnalise()
         self.analise_id = None
         self.dicas_visiveis = True
+        self.percentuais_visiveis = True
         self.placar = {"com":0, "sem":0, "empate":0}
         self.resultado_contado = None
         self._animacao_layout = None
@@ -107,6 +108,11 @@ class JanelaPrincipal:
             ferramentas,"lampada",self.aplicar_sugestao,"Usar sugestão",
         )
         self.bt_jogar.pack(side="left",padx=(0,4))
+        self.bt_percentuais=BotaoIcone(
+            ferramentas,"percentual",self.alternar_percentuais,
+            "Mostrar confiança relativa por casa",
+        )
+        self.bt_percentuais.pack(side="left",padx=(0,4))
         self.bt_dica=BotaoIcone(
             ferramentas,"aprofundar",lambda:self.buscar(aprofundar=True),
             "Aprofundar análise",
@@ -272,6 +278,7 @@ class JanelaPrincipal:
         self.bt_voltar.configure(state="normal" if self.jogo.historico or self.ocupado else "disabled")
         self.bt_olho.definir(self.dicas_visiveis)
         self.bt_olho.configure(state="disabled" if self.ocupado and self.config.usa_computador(e.vez) else "normal")
+        self.bt_percentuais.configure(active=self.percentuais_visiveis)
         self.estado_dicas.set("DICAS VISÍVEIS" if self.dicas_visiveis else "DICAS OCULTAS")
         com_ajuda = self.config.permite_ajuda(e.vez) and self.dicas_visiveis and not fim
         fundo_ajuda = t.CIANO_ESCURO if com_ajuda else t.ELEVADO
@@ -358,6 +365,12 @@ class JanelaPrincipal:
         )
         self.atualizar();self.responder()
 
+    def alternar_percentuais(self):
+        self.percentuais_visiveis=not self.percentuais_visiveis
+        self.bt_percentuais.configure(active=self.percentuais_visiveis)
+        if self.sugestao:
+            self.mostrar_dica()
+
     def clicar(self,casa):
         if self.ocupado or self.jogo.resultado or self.config.usa_computador(self.jogo.estado.vez):return
         lances=self.jogo.lances
@@ -375,7 +388,15 @@ class JanelaPrincipal:
             return
         tocar("selecionar")
         self.origem=casa
-        self.tabuleiro.exibir(self.jogo.estado,selecionada=casa,destinos={l.caminho[-1] for l in opcoes})
+        percentuais = (
+            self._percentuais_por_casa(casa)
+            if self.percentuais_visiveis else {}
+        )
+        self.tabuleiro.exibir(
+            self.jogo.estado,selecionada=casa,
+            destinos={l.caminho[-1] for l in opcoes},percentuais=percentuais,
+            explicacoes=self._explicacoes_por_casa(casa),
+        )
         self.instrucao.set("Agora clique em uma das casas verdes.")
 
     def jogar(self,lance):
@@ -417,7 +438,7 @@ class JanelaPrincipal:
             self.motivo.set("Aguarde o movimento do adversário. A ajuda volta na sua vez.")
         else:
             self.status_ia.set("●  Aprofundando a análise…" if aprofundar else "●  Analisando os dois lados…")
-            self.motivo.set("Estou verificando mais jogadas à frente. Aguarde até 8 segundos." if aprofundar else "Comparando seus movimentos e as respostas do adversário. A seta mostrará a sugestão.")
+            self.motivo.set("Estou verificando mais jogadas à frente. Aguarde até 8 segundos." if aprofundar else "Comparando seus movimentos e as respostas do adversário. A melhor casa pulsará no tabuleiro.")
         self.painel.iniciar("computador" if executar else "jogador",len(self.jogo.lances),aprofundar)
         identificador = self.analisador.analisar(
             estado,
@@ -469,7 +490,11 @@ class JanelaPrincipal:
             self.motivo.set(self.explicar(resposta))
             self.bt_jogar.configure(state="normal",active=True)
             self.bt_dica.configure(state="normal")
-            self.instrucao.set("Siga a seta ou escolha seu próprio movimento.")
+            self.instrucao.set(
+                "Passe o mouse sobre a peça ou uma casa para entender a comparação."
+                if self.percentuais_visiveis else
+                "Escolha a casa pulsante ou faça seu próprio movimento."
+            )
             self.mostrar_dica()
         self.root.after(40,receber)
 
@@ -484,12 +509,132 @@ class JanelaPrincipal:
         if lance.caminho[0] not in self.jogo.estado.damas and lance.caminho[-1] in lance.proximo.damas:return "A peça chega ao outro lado e vira dama, podendo se mover também para trás."
         if len(analise.continuacao) > 1:
             resposta=analise.continuacao[1].caminho
-            return f"Siga a seta verde. Uma resposta prevista é {nome_casa(resposta[0]).upper()} → {nome_casa(resposta[-1]).upper()}. A IA recalcula a estratégia depois de cada jogada."
-        return "Siga a seta verde. A IA comparou esta jogada com as alternativas e considerou as respostas do adversário."
+            return f"A casa ciano pulsa com a sugestão. Uma resposta prevista é {nome_casa(resposta[0]).upper()} → {nome_casa(resposta[-1]).upper()}, marcada em coral."
+        return "A casa ciano pulsa com a sugestão comparada às alternativas e respostas do adversário."
 
     def mostrar_dica(self):
         if self.dicas_visiveis and self.sugestao and not self.ocupado and self.config.permite_ajuda(self.jogo.estado.vez):
-            self.origem=None;self.tabuleiro.exibir(self.jogo.estado,previa=self.sugestao)
+            self.origem=None
+            resposta = None
+            percentual_resposta = None
+            percentuais = {}
+            if self.percentuais_visiveis and self.analise is not None:
+                percentuais = self._percentuais_por_casa()
+                if self.analise.respostas:
+                    previsao = max(
+                        self.analise.respostas,key=lambda opcao:opcao.confianca,
+                    )
+                    resposta = previsao.lance
+                    percentual_resposta = previsao.confianca
+            self.tabuleiro.exibir(
+                self.jogo.estado,previa=self.sugestao,
+                percentuais=percentuais,resposta=resposta,
+                percentual_resposta=percentual_resposta,
+                explicacoes=self._explicacoes_por_casa(),
+            )
+
+    def _percentuais_por_casa(self, origem=None):
+        percentuais = {}
+        if self.analise is None:
+            return percentuais
+        for opcao in self.analise.opcoes:
+            caminho = opcao.lance.caminho
+            if origem is not None and caminho[0] != origem:
+                continue
+            destino = caminho[-1]
+            percentuais[destino] = max(
+                percentuais.get(destino,0),opcao.confianca,
+            )
+        return percentuais
+
+    def _explicacoes_por_casa(self, origem=None):
+        if self.analise is None:
+            return {}
+        grupos = {}
+        for opcao in self.analise.opcoes:
+            caminho = opcao.lance.caminho
+            if origem is not None and caminho[0] != origem:
+                continue
+            grupos.setdefault(caminho[-1],[]).append(opcao)
+        if not grupos:
+            return {}
+
+        todas = [opcao for opcoes in grupos.values() for opcao in opcoes]
+        sugerida = next(
+            (opcao for opcao in self.analise.opcoes
+             if opcao.lance == self.analise.lance),
+            max(todas,key=lambda opcao:opcao.confianca),
+        )
+        maior = sugerida.confianca
+        total = len(self.analise.opcoes)
+        explicacoes = {}
+        for destino,opcoes in grupos.items():
+            opcoes.sort(key=lambda opcao:opcao.confianca,reverse=True)
+            opcao = opcoes[0]
+            caminho = opcao.lance.caminho
+            movimento = (
+                f"{nome_casa(caminho[0]).upper()} → "
+                f"{nome_casa(caminho[-1]).upper()}"
+            )
+            if opcao.lance == self.analise.lance:
+                comparacao = "É a jogada individual mais bem avaliada."
+                titulo = f"PEÇA E CASA SUGERIDAS · {movimento}"
+            else:
+                diferenca = max(0,maior-opcao.confianca)
+                comparacao = (
+                    "Está empatada com a sugestão na confiança arredondada."
+                    if diferenca == 0 else
+                    f"Ficou {diferenca} ponto(s) percentual(is) abaixo da sugestão."
+                )
+                titulo = f"ALTERNATIVA · {movimento}"
+
+            detalhes = []
+            capturas = len(opcao.lance.capturadas)
+            if capturas:
+                detalhes.append(
+                    f"captura {capturas} peça"+("" if capturas == 1 else "s")
+                )
+            if (
+                caminho[0] not in self.jogo.estado.damas
+                and caminho[-1] in opcao.lance.proximo.damas
+            ):
+                detalhes.append("promove a peça a dama")
+            efeito = (
+                " Também "+" e ".join(detalhes)+"."
+                if detalhes else ""
+            )
+            rotas = ""
+            if len(opcoes) > 1:
+                lista = ", ".join(
+                    f"{nome_casa(item.lance.caminho[0]).upper()} → "
+                    f"{nome_casa(item.lance.caminho[-1]).upper()} "
+                    f"({item.confianca}%)"
+                    for item in opcoes
+                )
+                rotas = (
+                    f"\nEsta casa recebe {len(opcoes)} jogadas: {lista}. "
+                    "O selo mostra a melhor delas; os valores não são somados."
+                )
+            texto = (
+                f"{titulo}\n{opcao.confianca}% de confiança relativa. "
+                f"{comparacao}{efeito}\n"
+                f"A busca comparou {total} jogadas até a profundidade "
+                f"{self.analise.profundidade}, considerando material, avanço, "
+                f"mobilidade e respostas do adversário.{rotas}\n"
+                "Os 100% são divididos entre as jogadas; não representam chance de vitória."
+            )
+            explicacoes[destino] = texto
+
+        origem_sugerida = self.analise.lance.caminho[0]
+        destino_sugerido = self.analise.lance.caminho[-1]
+        if origem is None or origem == origem_sugerida:
+            explicacoes[origem_sugerida] = (
+                "PEÇA SUGERIDA\n"
+                f"Mova {nome_casa(origem_sugerida).upper()} para "
+                f"{nome_casa(destino_sugerido).upper()}. "
+                "O contorno ciano marca a peça de origem; a casa de chegada pulsa suavemente."
+            )
+        return explicacoes
 
     def aplicar_sugestao(self):
         if self.dicas_visiveis and self.sugestao and self.config.permite_ajuda(self.jogo.estado.vez):self.jogar(self.sugestao)

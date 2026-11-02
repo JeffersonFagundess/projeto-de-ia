@@ -97,6 +97,18 @@ def test_telemetria_publica_apenas_niveis_concluidos_da_busca():
     )
 
 
+def test_confianca_relativa_cobre_lances_e_respostas_legais():
+    resultado=analisar(inicial(),segundos=10,profundidade_maxima=3)
+    assert {opcao.lance for opcao in resultado.opcoes} == set(movimentos(inicial()))
+    assert sum(opcao.confianca for opcao in resultado.opcoes) == 100
+    assert all(0 <= opcao.confianca <= 100 for opcao in resultado.opcoes)
+    if resultado.respostas:
+        assert {opcao.lance for opcao in resultado.respostas} == set(
+            movimentos(resultado.lance.proximo)
+        )
+        assert sum(opcao.confianca for opcao in resultado.respostas) == 100
+
+
 def test_nao_cai_na_captura_que_perde_todas_as_pecas_na_resposta():
     estado=Posicao(tuple(sorted((C['c3'],C['g5']))),
                    tuple(sorted((C['b4'],C['d4'],C['f6'],C['h8']))),

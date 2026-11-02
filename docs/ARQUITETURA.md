@@ -32,6 +32,8 @@ As regras públicas ficam em `full_game.py`. O tabuleiro compacto da busca deve 
 
 Durante cada profundidade, `opponent.py` publica pulsos limitados a aproximadamente 120 ms com nível e quantidade de posições. Ao concluir o nível, inclui nota e linha principal. O processo envia os eventos por uma fila limitada; somente o Tkinter atualiza o terminal e a animação. Pulsos podem ser descartados se a interface estiver atrasada, mas o resultado nunca é descartado. A telemetria permanece opcional e isolada: uma falha no consumidor não altera a jogada escolhida. O olho suspende apenas a análise destinada ao jogador; a busca automática do computador segue independente.
 
+Ao encerrar a profundidade final, a busca também devolve as notas das jogadas da raiz e das respostas exploradas para a opção escolhida. A interface normaliza essas notas como confiança relativa, preserva o vínculo com cada `Movimento` legal e desenha os percentuais nas casas. Essa normalização é apenas comparativa; não converte a regressão em probabilidade de vitória.
+
 O comando **Detalhar caminho** inicia uma busca explícita instrumentada. Cada nó concluído — inclusive os interrompidos pelo limite de tempo — é gravado em lotes por `damas/trace_store.py` num SQLite temporário. A fila envia à interface somente o caminho do arquivo pronto. `ui/reasoning.py` consulta 250 nós por página e reconstrói sob demanda a cadeia de pais do nó selecionado. Assim, uma captura com 40 mil ou mais interações não cria 40 mil widgets nem transfere todos os registros pela fila do Tkinter. O arquivo anterior é removido ao recapturar ou fechar o aplicativo.
 
 O diagnóstico, as medições e a ordem recomendada para futuras otimizações estão em `docs/DESEMPENHO.md`.

@@ -18,6 +18,7 @@ VARIANTES_ICONES = {
     "lampada": ("claro", "ciano", "desabilitado"),
     "olho_aberto": ("ciano", "desabilitado"),
     "olho_fechado": ("suave", "desabilitado"),
+    "percentual": ("claro", "ciano", "desabilitado"),
     "reiniciar": ("claro", "escuro", "desabilitado"),
     "terminal": ("suave",),
 }

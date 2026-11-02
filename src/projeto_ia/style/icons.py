@@ -17,6 +17,7 @@ ICONES_FONT_AWESOME = {
     "lampada": "\uf0eb",
     "olho_aberto": "\uf06e",
     "olho_fechado": "\uf070",
+    "percentual": "\uf295",
     "reiniciar": "\uf2f9",
     "terminal": "\uf120",
 }
