@@ -6,7 +6,7 @@ import pytest
 
 from projeto_ia.damas.full_game import Jogo, Posicao, inicial, movimentos
 from projeto_ia.damas.game import nome_casa
-from projeto_ia.damas.opponent import analisar, avaliar
+from projeto_ia.damas.opponent import analisar
 from projeto_ia.damas.search_board import compactar, expandir, gerar
 from projeto_ia.damas.strategy import carregar_assistente
 
@@ -83,6 +83,18 @@ def test_cancelamento_mantem_jogada_legal_sem_inventar_analise():
     a=analisar(inicial(),cancelado=lambda:True)
     assert a.lance in movimentos(inicial())
     assert a.profundidade == 0 and a.nos == 0
+
+
+def test_telemetria_publica_apenas_niveis_concluidos_da_busca():
+    eventos=[]
+    resultado=analisar(inicial(),segundos=10,profundidade_maxima=3,
+                       progresso=eventos.append)
+    assert [e["profundidade"] for e in eventos] == [1,2,3]
+    assert [e["nos"] for e in eventos] == sorted(e["nos"] for e in eventos)
+    assert eventos[-1]["nota"] == resultado.nota
+    assert eventos[-1]["linha"][0] == (
+        resultado.lance.caminho[0],resultado.lance.caminho[-1]
+    )
 
 
 def test_nao_cai_na_captura_que_perde_todas_as_pecas_na_resposta():

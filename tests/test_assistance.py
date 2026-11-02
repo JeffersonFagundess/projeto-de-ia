@@ -5,10 +5,10 @@ from collections import defaultdict
 import numpy as np
 
 from projeto_ia.damas.full_game import inicial, movimentos, Posicao
-from projeto_ia.damas.learning import RAIZ, NOMES, features, carregar_avaliador
+from projeto_ia.damas.learning import NOMES, features, carregar_avaliador
 from projeto_ia.damas.match import Configuracao
 from projeto_ia.damas.opponent import analisar
-from scripts.treinar_assistente_completo import chave
+from tools.treinar_assistente_completo import chave
 from projeto_ia.paths import BASE_COMPLETAS
 
 

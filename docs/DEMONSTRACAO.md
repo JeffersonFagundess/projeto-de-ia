@@ -18,9 +18,9 @@ Clique em **Exemplo rápido** e depois em **Jogar com a sugestão**. A peça faz
 
 **3. Comece uma partida real — 1 minuto**
 
-Clique em **Nova partida**. Há 12 peças de cada lado. O jogador 1 aceita a sugestão ou clica na peça e numa casa verde. Ao passar a vez, a dica desaparece e o jogador 2 faz sua própria escolha. As casas verdes indicam movimentos permitidos para ambos; não são recomendações para o lado sem ajuda.
+Clique em **Nova partida**. Há 12 peças de cada lado. Mostre o olho aberto e feche-o: a seta desaparece, a previsão do jogador é suspensa e o terminal confirma que a IA do computador continua ativa. Abra o olho novamente para recalcular a posição. O jogador 1 aceita a sugestão ou clica na peça e numa casa verde. Ao passar a vez, a dica desaparece e o jogador 2 faz sua própria escolha. As casas verdes indicam movimentos permitidos para ambos; não são recomendações para o lado sem ajuda.
 
-O botão **Pensar mais** aprofunda a análise por até 8 segundos. A sugestão automática usa de 3 a 5 segundos conforme o número de peças; o computador usa 1,5 segundo. Para uma comparação técnica com tempo igual, execute `python -m scripts.avaliar_assistente --partidas 4 --segundos 1.5`.
+Mostre também a **Telemetria da busca**: os pontos e conexões animados representam posição, jogadas, respostas e escolha. O terminal registra a profundidade concluída, as posições avaliadas, a nota e a sequência prevista; não é um raciocínio inventado. O botão **Aprofundar análise** amplia a busca para até 8 segundos. A sugestão automática usa de 3 a 5 segundos conforme o número de peças; o computador usa 1,5 segundo. Para uma comparação técnica com tempo igual, execute `python -m tools.avaliar_assistente --partidas 4 --segundos 1.5`.
 
 **4. Explique o aprendizado — 1 minuto**
 
@@ -40,7 +40,7 @@ Abra **Sobre a IA**. Explique que os exemplos de treino foram gerados por regras
 
 **“Quem tem IA sempre ganha?”** A ajuda pode errar. O resultado depende da posição, das escolhas e da força do adversário. O programa aceita vitórias do lado sem ajuda e empates.
 
-**“O que foi testado?”** A rede foi avaliada em 1.532 posições de partidas separadas do treino. O sistema atual também é testado contra o computador da própria interface, com cores alternadas; consulte `reports/partidas_completas/assistente_vs_computador.json`. O ensaio anterior de 24 vitórias usava programas mais simples. Nenhum deles mede desempenho contra pessoas nem demonstra sozinho que o ML é responsável pelas vitórias.
+**“O que foi testado?”** A rede foi avaliada em 1.532 posições de partidas separadas do treino. O sistema atual também é testado contra o computador da própria interface, com cores alternadas; consulte `resources/reports/partidas_completas/assistente_vs_computador.json`. O ensaio anterior de 24 vitórias usava programas mais simples. Nenhum deles mede desempenho contra pessoas nem demonstra sozinho que o ML é responsável pelas vitórias.
 
 **“Por que a abertura muda?”** Nos primeiros oito turnos, o assistente pode escolher entre opções com avaliações próximas, depois de verificar as respostas. Ele não escolhe qualquer lance aleatório para parecer diferente.
 

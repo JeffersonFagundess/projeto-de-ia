@@ -24,5 +24,3 @@ def test_vida_baixa_com_cura_prioriza_curar():
         "aliado_perto": False,
     }
     assert encontrar_regra(fatos)["id"] == 1
-
-\n

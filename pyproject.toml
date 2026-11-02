@@ -4,25 +4,68 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "projeto-de-ia"
-version = "3.3.0"
+version = "4.0.0"
 description = "Duelo de damas com assistência de Machine Learning para um jogador"
 requires-python = ">=3.12"
 dependencies = [
     "numpy==2.5.3",
+]
+
+[project.optional-dependencies]
+study = [
+    "pandas==3.0.6",
+    "scikit-learn==1.9.1",
+    "joblib==1.6.0",
+]
+training = [
     "pandas==3.0.6",
     "scikit-learn==1.9.1",
     "matplotlib==3.11.2",
     "joblib==1.6.0",
 ]
+assets = [
+    "Pillow==13.0.0",
+]
+dev = [
+    "pandas==3.0.6",
+    "scikit-learn==1.9.1",
+    "matplotlib==3.11.2",
+    "joblib==1.6.0",
+    "Pillow==13.0.0",
+    "pytest>=8,<10",
+    "ruff>=0.17,<1",
+    "vulture>=2.16,<3",
+    "unlzw3>=0.2,<1",
+]
 
-[project.optional-dependencies]
-dev = ["pytest>=8,<10", "unlzw3>=0.2,<1"]
+[project.scripts]
+damas-ia = "projeto_ia.ui.app:main"
+damas-estudo = "projeto_ia.ui.study:main"
+assistente-regras = "projeto_ia.expert.gui:main"
 
 [tool.setuptools.packages.find]
+where = ["src"]
 include = ["projeto_ia*"]
 
 [tool.setuptools.package-data]
-"projeto_ia.ui" = ["assets/*.ico", "assets/*.png"]
+"projeto_ia.style" = [
+    "assets/fonts/*.otf",
+    "assets/fonts/*.md",
+    "assets/fonts/*.txt",
+    "assets/images/*.ico",
+    "assets/images/*.png",
+    "assets/images/icons/*.png",
+    "assets/images/pieces/*.png",
+]
+"projeto_ia.sounds" = [
+    "assets/*.md",
+    "assets/*.txt",
+    "assets/*.wav",
+]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["src", "."]
+
+[tool.ruff]
+exclude = [".venv", "resources"]

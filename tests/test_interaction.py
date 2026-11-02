@@ -1,0 +1,47 @@
+"""Responsividade, telemetria incremental e integridade dos efeitos sonoros."""
+
+import wave
+from hashlib import sha256
+
+import numpy as np
+
+from projeto_ia.damas.full_game import inicial
+from projeto_ia.damas.opponent import analisar
+from projeto_ia.paths import BASE_FINAIS, TABELA_FINAIS
+from projeto_ia.sounds.player import EFEITOS, LICENCA
+
+
+def test_telemetria_publica_pulsos_durante_a_busca():
+    eventos = []
+    analisar(
+        inicial(),
+        segundos=.25,
+        profundidade_maxima=20,
+        progresso=eventos.append,
+    )
+    assert eventos
+    assert any(evento["completo"] for evento in eventos)
+    assert any(not evento["completo"] for evento in eventos)
+    assert [evento["nos"] for evento in eventos] == sorted(
+        evento["nos"] for evento in eventos
+    )
+
+
+def test_sons_locais_sao_wav_validos_e_tem_licenca():
+    assert set(EFEITOS) == {
+        "alternar", "clique", "dica", "erro", "fim", "mover", "selecionar",
+    }
+    for arquivo in EFEITOS.values():
+        assert arquivo.is_file()
+        with wave.open(str(arquivo), "rb") as audio:
+            assert audio.getnframes() > 0
+            assert audio.getframerate() > 0
+    assert "Creative Commons Zero" in LICENCA.read_text(encoding="utf-8")
+
+
+def test_tabela_compacta_corresponde_ao_csv_auditavel():
+    with np.load(TABELA_FINAIS, allow_pickle=False) as tabela:
+        assert tabela["versao"].tolist() == [1]
+        assert len(tabela["resultado"]) == 61504
+        assert int((tabela["distancia"] >= 0).sum()) == 57228
+        assert tabela["sha256_csv"].item() == sha256(BASE_FINAIS.read_bytes()).hexdigest()
