@@ -8,10 +8,12 @@ from hashlib import sha256
 import numpy as np
 
 from projeto_ia.damas.full_game import inicial
+from projeto_ia.damas.match import Configuracao
 from projeto_ia.damas.opponent import analisar
 from projeto_ia.damas.trace_store import GravadorRastro, remover_rastro
 from projeto_ia.paths import BASE_FINAIS, TABELA_FINAIS
 from projeto_ia.sounds.player import EFEITOS, LICENCA
+from projeto_ia.ui.app import JanelaPrincipal
 
 
 def test_telemetria_publica_pulsos_durante_a_busca():
@@ -55,7 +57,8 @@ def test_rastro_detalhado_e_persistido_para_consulta_paginada():
 
 def test_sons_locais_sao_wav_validos_e_tem_licenca():
     assert set(EFEITOS) == {
-        "alternar", "clique", "dica", "erro", "fim", "mover", "selecionar",
+        "alternar", "clique", "derrota", "dica", "empate", "erro", "mover",
+        "selecionar", "vitoria",
     }
     for arquivo in EFEITOS.values():
         assert arquivo.is_file()
@@ -63,6 +66,14 @@ def test_sons_locais_sao_wav_validos_e_tem_licenca():
             assert audio.getnframes() > 0
             assert audio.getframerate() > 0
     assert "Creative Commons Zero" in LICENCA.read_text(encoding="utf-8")
+
+
+def test_resultado_contra_computador_distingue_vitoria_e_derrota():
+    janela = object.__new__(JanelaPrincipal)
+    janela.config = Configuracao("computador", "V")
+    assert janela._descricao_resultado("V")[0] == "vitoria"
+    assert janela._descricao_resultado("P")[0] == "derrota"
+    assert janela._descricao_resultado("empate")[0] == "empate"
 
 
 def test_tabela_compacta_corresponde_ao_csv_auditavel():

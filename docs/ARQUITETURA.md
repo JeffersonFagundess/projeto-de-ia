@@ -8,6 +8,7 @@ entrada única (main.py)
 interface (src/projeto_ia/ui/app.py)
     ├─ olho aberto/fechado: política opcional de exibição e cálculo da dica
     ├─ janela separada de telemetria e exploração (ui/reasoning.py)
+    ├─ resultado animado sobre o tabuleiro (ui/result_overlay.py)
     ├─ processo persistente da IA (ui/analysis_service.py)
     ├─ efeitos WAV assíncronos (src/projeto_ia/sounds/)
     └─ estilo central (src/projeto_ia/style/)

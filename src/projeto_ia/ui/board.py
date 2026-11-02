@@ -7,6 +7,8 @@ from projeto_ia.style import palette as t
 from projeto_ia.style.icons import desenhar_peca
 from projeto_ia.style.images import carregar_pecas
 
+from .result_overlay import AnimacaoResultado
+
 
 class Tabuleiro(tk.Canvas):
     def __init__(self, pai, tamanho=352, ao_clicar=None):
@@ -15,6 +17,7 @@ class Tabuleiro(tk.Canvas):
         self.imagens = carregar_pecas(self, round(self.passo))
         self.ao_clicar = ao_clicar
         self.temporizador = None
+        self.resultado = AnimacaoResultado(self)
         self.bind("<Button-1>", self._clique)
 
     def _clique(self, evento):
@@ -27,6 +30,7 @@ class Tabuleiro(tk.Canvas):
         return (coluna + 0.5) * self.passo, (linha + 0.5) * self.passo
 
     def exibir(self, estado, selecionada=None, destinos=(), caminhos=(), previa=None):
+        self.resultado.ocultar()
         self.delete("all")
         verdes = {casa for caminho in caminhos for casa in caminho}
         if previa:
@@ -66,6 +70,10 @@ class Tabuleiro(tk.Canvas):
         if self.temporizador is not None:
             self.after_cancel(self.temporizador)
             self.temporizador = None
+        self.resultado.ocultar()
+
+    def mostrar_resultado(self, tipo, titulo, mensagem, ao_recomecar):
+        self.resultado.mostrar(tipo, titulo, mensagem, ao_recomecar)
 
     def animar(self, estado, lance, ao_terminar):
         self.cancelar()

@@ -13,9 +13,9 @@ Conversão WAV utilizada: <https://github.com/Calinou/kenney-interface-sounds>
 | `clique.wav` | `click_001.wav` | botão |
 | `selecionar.wav` | `select_001.wav` | peça selecionada |
 | `mover.wav` | `drop_001.wav` | movimento |
-| `dica.wav` | `confirmation_001.wav` | previsão concluída |
-| `erro.wav` | `error_001.wav` | ação inválida/erro |
-| `fim.wav` | `bong_001.wav` | fim da partida |
+| `dica.wav` | `confirmation_001.wav` | previsão concluída/vitória |
+| `erro.wav` | `error_001.wav` | ação inválida/erro/derrota |
+| `fim.wav` | `bong_001.wav` | empate |
 | `alternar.wav` | `toggle_002.wav` | dicas abertas/fechadas |
 
 A licença integral acompanha os arquivos em `LICENSE-KENNEY-CC0.txt`.

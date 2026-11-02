@@ -10,7 +10,7 @@ ICONE_ICO = PASTA / "damas.ico"
 ICONE_PNG = PASTA / "damas.png"
 TAMANHOS_PECAS = (22, 40, 48)
 VARIANTES_ICONES = {
-    "adicionar": ("claro", "escuro", "desabilitado"),
+    "adicionar": ("claro", "ciano", "escuro", "desabilitado"),
     "analise": ("claro", "ciano", "desabilitado"),
     "aprofundar": ("claro", "ciano", "desabilitado"),
     "desfazer": ("claro", "ciano", "escuro", "desabilitado"),
@@ -18,6 +18,7 @@ VARIANTES_ICONES = {
     "lampada": ("claro", "ciano", "desabilitado"),
     "olho_aberto": ("ciano", "desabilitado"),
     "olho_fechado": ("suave", "desabilitado"),
+    "reiniciar": ("claro", "escuro", "desabilitado"),
     "terminal": ("suave",),
 }
 

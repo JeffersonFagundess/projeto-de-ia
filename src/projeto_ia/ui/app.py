@@ -5,7 +5,7 @@ import random
 import tkinter as tk
 
 from projeto_ia.damas.endgame_table import avaliacao_exata
-from projeto_ia.damas.full_game import Jogo, Posicao
+from projeto_ia.damas.full_game import Jogo
 from projeto_ia.damas.game import nome_casa
 from projeto_ia.damas.match import Configuracao
 from projeto_ia.damas.search_board import compactar
@@ -35,7 +35,7 @@ def nome(cor):
 class JanelaPrincipal:
     def __init__(self, root):
         self.root = root
-        preparar(root,"Damas | Duelo com IA","1080x680",(680,640))
+        preparar(root,"Damas | Duelo com IA","1080x680",(500,640))
         self.config = Configuracao()
         self.gerador = random.Random()
         self.jogo = Jogo()
@@ -44,7 +44,6 @@ class JanelaPrincipal:
         self.geracao = 0
         self.analisador = ServicoAnalise()
         self.analise_id = None
-        self.demonstracao = False
         self.dicas_visiveis = True
         self.placar = {"com":0, "sem":0, "empate":0}
         self.resultado_contado = None
@@ -75,12 +74,6 @@ class JanelaPrincipal:
         marca.pack(side="left", padx=(0, 12))
         desenhar_marca(marca)
         self.texto(topo, "DAMAS", 24, forte=True).pack(side="left")
-        tk.Frame(topo, width=1, height=25, bg=LINHA).pack(side="left", padx=18)
-        assinatura = tk.Frame(topo, bg=FUNDO)
-        assinatura.pack(side="left")
-        self.texto(assinatura, "DUELO COM IA", 10, AZUL, True).pack(anchor="w")
-        self.texto(assinatura, "Ajuda opcional com busca visível.", 9, SUAVE).pack(anchor="w")
-        self.botao(topo, "Nova partida", self.nova, icone="adicionar").pack(side="right")
 
         barra = tk.Frame(self.root, bg=FUNDO)
         barra.pack(fill="x", padx=20, pady=(0, 12))
@@ -96,7 +89,6 @@ class JanelaPrincipal:
         self.lado = Escolha(assistencia, ("Jogador 1", "Jogador 2"), largura=103)
         self.lado.pack()
         self.lado.bind("<<ComboboxSelected>>", self.configurar)
-        self.botao(barra, "Exemplo rápido", self.exemplo, icone="jogar").pack(side="right", anchor="s")
 
         corpo = tk.Frame(self.root, bg=FUNDO)
         corpo.pack(fill="both", expand=True, padx=20, pady=(0, 16))
@@ -128,8 +120,11 @@ class JanelaPrincipal:
             ferramentas,"desfazer",self.voltar,"Desfazer jogada",
         )
         self.bt_voltar.pack(side="left")
+        self.bt_nova=BotaoIcone(
+            cabecalho,"adicionar",self.nova,"Nova partida",
+        )
+        self.bt_nova.pack(side="right")
         self.caption = tk.StringVar()
-        self.texto(cabecalho, textvariable=self.caption, tamanho=8, cor=SUAVE).pack(side="right")
         moldura = tk.Frame(esquerda, bg="#365369", padx=4, pady=4)
         moldura.pack()
         self.tabuleiro = Tabuleiro(moldura, tamanho=384, ao_clicar=self.clicar)
@@ -138,7 +133,15 @@ class JanelaPrincipal:
         legenda.pack(fill="x", pady=(12, 5))
         self.texto(legenda, "1  Escolha uma peça", 9, TEXTO).pack(side="left", padx=(4, 15))
         self.texto(legenda, "2  Vá para a casa verde", 9, AZUL).pack(side="left")
-        self.texto(esquerda, "Coroa = dama  ·  Capturar é obrigatório", 9, SUAVE).pack()
+        rodape_tabuleiro=tk.Frame(esquerda,bg=PAPEL)
+        rodape_tabuleiro.pack(fill="x",pady=(2,0))
+        self.texto(
+            rodape_tabuleiro,"Coroa = dama  ·  Captura obrigatória",8,SUAVE,
+        ).pack(side="left")
+        self.texto(
+            rodape_tabuleiro, textvariable=self.caption, tamanho=8, cor=SUAVE,
+            anchor="e",
+        ).pack(side="right")
 
         direita = tk.Frame(corpo, bg=PAPEL, padx=16, pady=12,
                            highlightthickness=1, highlightbackground=LINHA)
@@ -194,14 +197,19 @@ class JanelaPrincipal:
     def _aplicar_layout(self, animar=True):
         """Mostra ferramentas do duelo local e anima a largura da janela."""
         expandido = self.config.modo == "dupla"
-        if expandido and not self.painel_jogo.winfo_manager():
+        if self.painel_tabuleiro.winfo_manager():
+            self.painel_tabuleiro.pack_forget()
+        if self.painel_jogo.winfo_manager():
+            self.painel_jogo.pack_forget()
+        if expandido:
+            self.painel_tabuleiro.pack(side="left", fill="y")
             self.painel_jogo.pack(
                 side="left", fill="both", expand=True, padx=(14, 0),
             )
-        elif not expandido and self.painel_jogo.winfo_manager():
-            self.painel_jogo.pack_forget()
+        else:
+            self.painel_tabuleiro.pack(side="top", anchor="n")
 
-        alvo = 1080 if expandido else 680
+        alvo = 1080 if expandido else 520
         if self._animacao_layout is not None:
             self.root.after_cancel(self._animacao_layout)
             self._animacao_layout = None
@@ -256,7 +264,7 @@ class JanelaPrincipal:
             titulo.configure(text=f"{glifo('ponto')}  {'Computador' if self.config.usa_computador(cor) else 'Jogador '+('1' if cor == 'V' else '2')}")
             card.configure(highlightbackground=(CORAL if cor == "V" else t.PRATA) if e.vez == cor and not fim else LINHA)
         n = len(self.jogo.historico)
-        self.caption.set("EXEMPLO PREPARADO" if self.demonstracao else f"{n:02d} {'JOGADA' if n == 1 else 'JOGADAS'} · PARTIDA COMPLETA")
+        self.caption.set(f"{n:02d} {'JOGADA' if n == 1 else 'JOGADAS'} · PARTIDA COMPLETA")
         self.titulo.set("Empate" if fim == "empate" else f"{nome(fim).capitalize()} venceram!" if fim else f"Vez do {'computador' if self.config.usa_computador(e.vez) else 'jogador 1' if e.vez == 'V' else 'jogador 2'}")
         self.instrucao.set("A partida terminou. Comece outra para trocar os papéis." if fim else f"Mova uma peça {'vermelha' if e.vez == 'V' else 'preta'} para uma casa verde.")
         self.bt_jogar.configure(state="disabled",active=False)
@@ -275,8 +283,9 @@ class JanelaPrincipal:
         if fim:
             self.status_ia.set("Resultado da partida")
             self.motivo.set("Empate por repetição ou falta de progresso." if fim == "empate" else f"As {nome(e.vez)} ficaram sem peças ou sem movimentos.")
-            if not self.demonstracao and self.resultado_contado is None:
-                tocar("fim")
+            tipo, titulo, mensagem = self._descricao_resultado(fim)
+            if self.resultado_contado is None:
+                tocar(tipo)
                 chave="empate" if fim == "empate" else "com" if fim == self.config.lado_assistido else "sem"
                 self.placar[chave]+=1;self.resultado_contado=chave
             self.painel.aguardar("Partida concluída. Inicie outra para uma nova análise.")
@@ -295,7 +304,26 @@ class JanelaPrincipal:
             self.motivo.set("Este jogador está sem ajuda. Escolha uma peça e depois uma casa verde.")
             self.painel.aguardar("Turno sem assistência: nenhuma recomendação é calculada.")
         self.tabuleiro.exibir(e,caminhos=self.jogo.caminhos_recentes())
+        if fim:
+            self.tabuleiro.mostrar_resultado(
+                tipo, titulo, mensagem, self.nova,
+            )
         self.serie.set(f"PLACAR    Com IA  {self.placar['com']}    /    Sem ajuda  {self.placar['sem']}    /    Empates  {self.placar['empate']}")
+
+    def _descricao_resultado(self, fim):
+        if fim == "empate":
+            return (
+                "empate", "Empate",
+                "A posição se repetiu ou chegou ao limite sem progresso.",
+            )
+        if self.config.modo == "computador":
+            if fim == self.config.lado_assistido:
+                return "vitoria", "Vitória!", "Você superou o computador nesta partida."
+            return "derrota", "Derrota", "O computador venceu. Tente uma estratégia diferente."
+        return (
+            "vitoria", f"Vitória das {nome(fim)}!",
+            "Comece outra rodada mantendo os mesmos jogadores.",
+        )
 
     def cancelar(self):
         self.geracao+=1
@@ -308,7 +336,7 @@ class JanelaPrincipal:
         self.cancelar();self.analisador.fechar();self.painel.fechar();self.root.destroy()
 
     def nova(self):
-        self.cancelar();self.demonstracao=False;self.jogo=Jogo();self.resultado_contado=None
+        self.cancelar();self.jogo=Jogo();self.resultado_contado=None
         self.relato.set("Nova partida: 12 peças de cada lado. Só o jogador marcado ‘Com IA’ recebe sugestões.")
         self.atualizar();self.responder()
 
@@ -328,16 +356,6 @@ class JanelaPrincipal:
             if self.dicas_visiveis else
             "Dicas ocultadas. Você continua jogando normalmente; a IA do computador permanece ativa."
         )
-        self.atualizar();self.responder()
-
-    def exemplo(self):
-        self.cancelar();self.demonstracao=True;self.resultado_contado=None
-        casa={nome_casa(i):i for i in range(32)}
-        estado=Posicao(tuple(sorted(casa[c] for c in ('a1','c1','h2'))),tuple(sorted(casa[c] for c in ('d2','f4','f6'))))
-        self.config=Configuracao();self.modo.current(0);self.lado.current(0)
-        self._aplicar_layout()
-        self.jogo=Jogo(estado)
-        self.relato.set("Exemplo preparado para a apresentação. A sequência mostra uma captura múltipla; não conta no placar.")
         self.atualizar();self.responder()
 
     def clicar(self,casa):
@@ -486,7 +504,7 @@ class JanelaPrincipal:
         self.atualizar();self.responder()
 
     def guia(self):
-        mostrar_informacao(self.root, "Como demonstrar em sala", "1. Selecione ‘Outra pessoa’. O jogador marcado ‘Com IA’ pode receber sugestões; o outro joga sem dicas.\n\n2. Use o olho aberto/fechado para mostrar ou ocultar a ajuda do jogador. Isso não desliga a IA do computador.\n\n3. A telemetria mostra profundidade, posições avaliadas, nota e a sequência prevista pela busca.\n\n4. Clique em ‘Exemplo rápido’ para mostrar uma captura em sequência.\n\n5. Na vez com IA, aceite a sugestão ou faça sua escolha. A IA pode errar; nenhuma vitória está garantida.")
+        mostrar_informacao(self.root, "Como demonstrar em sala", "1. Selecione ‘Outra pessoa’. O jogador marcado ‘Com IA’ pode receber sugestões; o outro joga sem dicas.\n\n2. Use o olho aberto/fechado para mostrar ou ocultar a ajuda do jogador. Isso não desliga a IA do computador.\n\n3. O gráfico abre a telemetria com profundidade, posições avaliadas, nota e sequência prevista.\n\n4. A lâmpada aplica a sugestão, a lupa aprofunda a busca e o ícone + inicia outra partida.\n\n5. A ajuda pode errar; nenhuma vitória está garantida.")
 
     def regras(self):
         mostrar_informacao(self.root, "Regras · damas inglesas", "Peças comuns andam e capturam para a frente, na diagonal. Ao chegar ao outro lado, viram damas, marcadas com uma coroa. Elas também podem voltar e andam uma casa.\n\nCapturar é obrigatório. Os saltos em sequência são completados; a promoção encerra o turno.\n\nVence quem deixa o outro sem peças ou movimentos. Empate: terceira repetição da posição ou 40 jogadas por lado sem captura nem avanço de peão.\n\nContra o computador, você controla o lado marcado ‘Com IA’.")

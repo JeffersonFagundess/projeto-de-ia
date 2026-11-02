@@ -9,10 +9,12 @@ EFEITOS = {
     "alternar": PASTA / "alternar.wav",
     "clique": PASTA / "clique.wav",
     "dica": PASTA / "dica.wav",
+    "derrota": PASTA / "erro.wav",
+    "empate": PASTA / "fim.wav",
     "erro": PASTA / "erro.wav",
-    "fim": PASTA / "fim.wav",
     "mover": PASTA / "mover.wav",
     "selecionar": PASTA / "selecionar.wav",
+    "vitoria": PASTA / "dica.wav",
 }
 
 try:

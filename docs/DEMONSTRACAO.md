@@ -14,11 +14,11 @@ Mostre os cartões **Com IA** e **Sem dicas**. A borda indica a vez de jogar.
 
 **2. Mostre como funciona — 30 segundos**
 
-Clique em **Exemplo rápido** e depois na **lâmpada**. A peça faz uma sequência de capturas, e a tela explica o resultado. Diga que é um tabuleiro preparado para demonstrar o movimento, e que ele não conta no placar.
+Na sugestão inicial, mostre a seta e clique na **lâmpada**. A peça se move e a tela explica por que a jogada foi recomendada. O participante também pode ignorar a dica e escolher outro movimento legal.
 
 **3. Comece uma partida real — 1 minuto**
 
-Clique em **Nova partida**. Há 12 peças de cada lado. Mostre o olho aberto e feche-o: a seta desaparece e a previsão do jogador é suspensa; a IA do computador continua ativa. Abra o olho novamente para recalcular a posição. O jogador 1 aceita a sugestão pela lâmpada ou clica na peça e numa casa verde. Ao passar a vez, a dica desaparece e o jogador 2 faz sua própria escolha. As casas verdes indicam movimentos permitidos para ambos; não são recomendações para o lado sem ajuda.
+Clique no ícone **+**. Há 12 peças de cada lado. Mostre o olho aberto e feche-o: a seta desaparece e a previsão do jogador é suspensa; a IA do computador continua ativa. Abra o olho novamente para recalcular a posição. O jogador 1 aceita a sugestão pela lâmpada ou clica na peça e numa casa verde. Ao passar a vez, a dica desaparece e o jogador 2 faz sua própria escolha. As casas verdes indicam movimentos permitidos para ambos; não são recomendações para o lado sem ajuda.
 
 Abra o ícone de **gráfico** para mostrar a **Telemetria da busca**: os pontos e conexões animados representam posição, jogadas, respostas e escolha. O terminal registra a profundidade concluída, as posições avaliadas, a nota e a sequência prevista; não é um raciocínio inventado. Clique em **Detalhar caminho** para registrar cada nó e selecionar posições da árvore em páginas. A **lupa** amplia a busca para até 8 segundos sem gravar esse rastro completo. A sugestão automática usa de 3 a 5 segundos conforme o número de peças; o computador usa 1,5 segundo. Para uma comparação técnica com tempo igual, execute `python -m tools.avaliar_assistente --partidas 4 --segundos 1.5`.
 
@@ -27,6 +27,8 @@ Abra o ícone de **gráfico** para mostrar a **Telemetria da busca**: os pontos 
 “Geramos 7.657 posições a partir de 240 partidas simuladas. Uma busca calculou notas táticas para esses exemplos. A rede neural aprendeu a aproximar essas notas. Durante a partida, o assistente combina a rede com avaliação de peças e estratégia e compara as respostas do adversário. É um sistema híbrido, não apenas a rede neural.”
 
 Abra **Sobre a IA**. Explique que os exemplos de treino foram gerados por regras e busca, não por partidas humanas, e que a nota não representa chance exata de vitória.
+
+Ao terminar uma rodada, mostre o cartão animado sobre o tabuleiro. Vitória e derrota têm sinais sonoros diferentes, e **Jogar novamente** reinicia mantendo o modo e o lado escolhidos.
 
 ## Comparação em sala
 

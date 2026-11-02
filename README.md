@@ -57,16 +57,16 @@ O modo **Outra pessoa** permite duas pessoas no mesmo computador. O modo **Compu
 5. Use o **olho aberto/fechado** na mesma barra para tornar as dicas opcionais. Fechar o olho remove a seta, oculta a análise e evita novas previsões para o jogador; a IA do computador continua funcionando normalmente.
 6. Na vez do jogador **Sem dicas**, a sugestão desaparece e os comandos de ajuda ficam bloqueados. Casas verdes continuam indicando movimentos legais para ambos.
 7. Clique no ícone de **gráfico** para abrir a janela separada de análise. Ela anima os caminhos explorados e registra dados reais de cada nível concluído: posições avaliadas, nota e sequência prevista. **Detalhar caminho** faz uma nova busca explícita, grava cada nó e permite percorrer a árvore em páginas de 250 posições, com o tabuleiro e a rota do nó selecionado.
-8. Use o ícone de **desfazer** para experimentar outro caminho ou **Nova partida** para recomeçar. No modo contra o computador, desfazer retorna à última decisão humana.
+8. Use o ícone de **desfazer** para experimentar outro caminho ou o ícone **+** para recomeçar. No modo contra o computador, desfazer retorna à última decisão humana.
 9. Em uma posição difícil, use a **lupa** antes de jogar: a ajuda analisa por até 8 segundos, com limite de 18 turnos. Essa opção não sorteia alternativas; busca a melhor nota encontrada. A seta já aparece automaticamente quando as dicas estão visíveis.
 
-Trocar o modo ou o lado assistido inicia uma nova partida. **Outra pessoa** expande o painel de participantes, sugestão e placar; **Computador** oculta esse bloco e reduz a janela para manter apenas o essencial. O placar acumula resultados das partidas concluídas enquanto a janela permanece aberta; desfazer uma vitória remove esse resultado. O exemplo preparado não conta no placar.
+Trocar o modo ou o lado assistido inicia uma nova partida. **Outra pessoa** expande o painel de participantes, sugestão e placar; **Computador** oculta esse bloco, centraliza o tabuleiro e reduz a janela para manter apenas o essencial. Ao final, uma animação de vitória, derrota ou empate aparece sobre o tabuleiro, reproduz o efeito correspondente e oferece **Jogar novamente**. O placar acumula resultados das partidas concluídas enquanto a janela permanece aberta; desfazer uma vitória remove esse resultado.
 
 A interface usa fundo azul escuro, destaque ciano para a assistência e peças vermelhas e pretas com contornos distintos. Casas verdes indicam caminhos e destinos; a coroa identifica uma dama. Botões e seletores também aceitam Tab e Enter ou espaço. Paletas, fontes, controles, ícones, imagens e janelas são centralizados em `src/projeto_ia/style/`. O Font Awesome Free 7.3.1 fica embarcado localmente em `style/assets/fonts/`, com sua licença; seus glifos necessários já vêm rasterizados em PNG para não instalar fontes no Windows nem adicionar dependência em tempo de execução. As peças usam sprites PNG antialiasados nos três tamanhos reais dos tabuleiros. Instale o grupo `assets` e execute `python -m tools.gerar_recursos_interface` somente para regenerar esses recursos.
 
 ## Demonstrar em sala
 
-Clique em **Exemplo rápido** para mostrar uma captura em sequência num tabuleiro preparado. Depois, clique em **Nova partida** para o duelo completo. O botão **Como demonstrar** explica o roteiro dentro do aplicativo. Consulte também [o roteiro de apresentação](docs/DEMONSTRACAO.md).
+O botão **Como demonstrar** explica o roteiro dentro do aplicativo. Use a lâmpada para aplicar uma sugestão, o gráfico para abrir a telemetria e o ícone **+** para iniciar outra rodada. Consulte também [o roteiro de apresentação](docs/DEMONSTRACAO.md).
 
 A IA ajuda a decidir, mas não garante vitória. O placar registra o resultado real: vitórias de qualquer lado e empates. Para comparar participantes, troquem quem recebe ajuda entre partidas.
 
