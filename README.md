@@ -53,14 +53,14 @@ O modo **Outra pessoa** permite duas pessoas no mesmo computador. O modo **Compu
 1. Em **Jogar contra**, selecione **Outra pessoa**.
 2. Em **Quem recebe ajuda**, escolha qual jogador receberá dicas. O jogador 1 controla as vermelhas e começa; o jogador 2 controla as pretas.
 3. Clique numa peça e, depois, numa casa verde. A tela identifica a vez, as cores e as peças restantes.
-4. Na vez do jogador **Com IA**, uma seta mostra a sugestão. Ele pode clicar em **Jogar com a sugestão** ou escolher outro movimento.
-5. Use o **olho aberto/fechado** no cartão da ajuda para tornar as dicas opcionais. Fechar o olho remove a seta, oculta a análise e evita novas previsões para o jogador; a IA do computador continua funcionando normalmente.
+4. Na vez do jogador **Com IA**, uma seta mostra a sugestão. Ele pode clicar na **lâmpada** da barra do tabuleiro para usá-la ou escolher outro movimento.
+5. Use o **olho aberto/fechado** na mesma barra para tornar as dicas opcionais. Fechar o olho remove a seta, oculta a análise e evita novas previsões para o jogador; a IA do computador continua funcionando normalmente.
 6. Na vez do jogador **Sem dicas**, a sugestão desaparece e os comandos de ajuda ficam bloqueados. Casas verdes continuam indicando movimentos legais para ambos.
-7. A janela **Telemetria da busca** anima os caminhos explorados e registra dados reais de cada nível concluído: posições avaliadas, nota e sequência prevista.
-8. Use **Desfazer** para experimentar outro caminho ou **Nova partida** para recomeçar. No modo contra o computador, desfazer retorna à última decisão humana.
-9. Em uma posição difícil, use **Aprofundar análise** antes de jogar: a ajuda analisa por até 8 segundos, com limite de 18 turnos. Essa opção não sorteia alternativas; busca a melhor nota encontrada. A seta já aparece automaticamente quando as dicas estão visíveis.
+7. Clique no ícone de **gráfico** para abrir a janela separada de análise. Ela anima os caminhos explorados e registra dados reais de cada nível concluído: posições avaliadas, nota e sequência prevista. **Detalhar caminho** faz uma nova busca explícita, grava cada nó e permite percorrer a árvore em páginas de 250 posições, com o tabuleiro e a rota do nó selecionado.
+8. Use o ícone de **desfazer** para experimentar outro caminho ou **Nova partida** para recomeçar. No modo contra o computador, desfazer retorna à última decisão humana.
+9. Em uma posição difícil, use a **lupa** antes de jogar: a ajuda analisa por até 8 segundos, com limite de 18 turnos. Essa opção não sorteia alternativas; busca a melhor nota encontrada. A seta já aparece automaticamente quando as dicas estão visíveis.
 
-Trocar o modo ou o lado assistido inicia uma nova partida. O placar acumula resultados das partidas concluídas enquanto a janela permanece aberta; desfazer uma vitória remove esse resultado. O exemplo preparado não conta no placar.
+Trocar o modo ou o lado assistido inicia uma nova partida. **Outra pessoa** expande o painel de participantes, sugestão e placar; **Computador** oculta esse bloco e reduz a janela para manter apenas o essencial. O placar acumula resultados das partidas concluídas enquanto a janela permanece aberta; desfazer uma vitória remove esse resultado. O exemplo preparado não conta no placar.
 
 A interface usa fundo azul escuro, destaque ciano para a assistência e peças vermelhas e pretas com contornos distintos. Casas verdes indicam caminhos e destinos; a coroa identifica uma dama. Botões e seletores também aceitam Tab e Enter ou espaço. Paletas, fontes, controles, ícones, imagens e janelas são centralizados em `src/projeto_ia/style/`. O Font Awesome Free 7.3.1 fica embarcado localmente em `style/assets/fonts/`, com sua licença; seus glifos necessários já vêm rasterizados em PNG para não instalar fontes no Windows nem adicionar dependência em tempo de execução. As peças usam sprites PNG antialiasados nos três tamanhos reais dos tabuleiros. Instale o grupo `assets` e execute `python -m tools.gerar_recursos_interface` somente para regenerar esses recursos.
 
@@ -82,7 +82,7 @@ Quando restam duas ou três peças e todas são damas, o assistente consulta os 
 
 Somente o lado escolhido recebe sugestões, e o olho permite suspender ou retomar essa ajuda sem alterar as regras. No modo **Computador**, o adversário usa a mesma busca e profundidade máxima, com avaliação tradicional de peças e avanço e **1,5 segundo por jogada**, sem o modelo aprendido ou consulta aos finais resolvidos. Fechar o olho não desliga essa busca adversária. Esse modo não representa uma pessoa sem assistência.
 
-O painel lateral não expõe texto interno nem inventa um raciocínio: ele recebe telemetria real do processo da IA durante a exploração e ao terminar cada profundidade. A animação representa candidatos, respostas e decisão; posições avaliadas e nível avançam durante a busca. Consulte [o diagnóstico de desempenho](docs/DESEMPENHO.md) para as medições e próximas otimizações.
+A janela de análise não expõe texto interno nem inventa um raciocínio: ela recebe telemetria real do processo da IA durante a exploração e ao terminar cada profundidade. A animação representa candidatos, respostas e decisão; posições avaliadas e nível avançam durante a busca. A captura detalhada é opcional porque adiciona escrita; quando solicitada, usa um SQLite temporário paginado em vez de criar milhares de elementos na interface. Consulte [o diagnóstico de desempenho](docs/DESEMPENHO.md) para as medições e próximas otimizações.
 
 ## Bases de dados e treinamento
 
@@ -187,13 +187,14 @@ src/projeto_ia/
     assistant.py   configuração compartilhada pela interface e pelo ensaio
     endgame_table.py consulta aos finais resolvidos
     opponent.py    busca de jogadas e respostas
+    trace_store.py captura temporária e paginada dos nós da busca
     search_board.py representação compacta usada pela busca
     ...            experimento anterior de finais de damas
   ui/
     app.py         duelo, controles, turnos e placar
     analysis_service.py processo persistente e filas da IA
     board.py       desenho, cliques e animação
-    reasoning.py   animação e terminal da telemetria da busca
+    reasoning.py   janela de telemetria e explorador da busca detalhada
     options.py     escolha visual de caminhos de captura
     study.py       demonstração anterior de finais
   style/

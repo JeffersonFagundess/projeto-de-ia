@@ -60,7 +60,7 @@ def tempo_analise(estado,com_ajuda):
 def analisar_turno(estado, com_ajuda, historico=(), sem_progresso=0,
                    cancelado=lambda:False, gerador=None,
                    segundos=None, profundidade_maxima=PROFUNDIDADE_MAXIMA,
-                   variar=True, progresso=None):
+                   variar=True, progresso=None, detalhe=None):
     abertura = variar and len(historico) < 8
     if com_ajuda and (len(estado.vermelhas)+len(estado.pretas) <= 7):
         carregar_avaliacoes()
@@ -89,4 +89,4 @@ def analisar_turno(estado, com_ajuda, historico=(), sem_progresso=0,
                     historico=historico,sem_progresso=sem_progresso,cancelado=cancelado,
                     gerador=(gerador or random.Random()) if abertura else None,
                     margem=6 if abertura and com_ajuda else 0,
-                    progresso=progresso)
+                    progresso=progresso,detalhe=detalhe)

@@ -35,6 +35,12 @@ Medição local em 2 de novembro de 2026; os números variam conforme o hardware
 O tempo de 3 a 8 segundos da sugestão é hoje um orçamento intencional de busca,
 não um congelamento da janela. O usuário pode continuar interagindo e cancelar.
 
+A telemetria fica numa janela própria e a interface principal não cria gráficos
+ou métricas. A captura completa só é ativada por **Detalhar caminho**. Os nós são
+gravados em lotes num SQLite temporário, enquanto o explorador consulta 250 por
+página; portanto, uma busca de dezenas de milhares de posições não materializa
+dezenas de milhares de widgets nem ocupa a fila de eventos da interface.
+
 Um perfil de 1 segundo registrou aproximadamente 1,67 milhão de chamadas. O
 custo acumulado ficou concentrado na avaliação estratégica/atributos (cerca de
 56%) e geração de lances (cerca de 34%); a inferência isolada da rede ficou em

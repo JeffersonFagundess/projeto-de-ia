@@ -18,6 +18,113 @@ def arredondado(canvas, x1, y1, x2, y2, raio=p.RAIO_CONTROLE, **kw):
     )
 
 
+class _Tooltip:
+    def __init__(self, widget, texto):
+        self.widget, self.texto = widget, texto
+        self.timer = self.janela = None
+
+    def mostrar_depois(self):
+        self.ocultar()
+        self.timer = self.widget.after(450, self._mostrar)
+
+    def _mostrar(self):
+        self.timer = None
+        if not self.widget.winfo_exists():
+            return
+        self.janela = tk.Toplevel(self.widget)
+        self.janela.overrideredirect(True)
+        self.janela.attributes("-topmost", True)
+        tk.Label(
+            self.janela, text=self.texto, bg="#223950", fg=p.TEXTO,
+            font=fonte(9), padx=8, pady=5,
+        ).pack()
+        self.janela.geometry(
+            f"+{self.widget.winfo_rootx()}+{self.widget.winfo_rooty()+self.widget.winfo_height()+5}"
+        )
+
+    def ocultar(self):
+        if self.timer is not None:
+            self.widget.after_cancel(self.timer)
+            self.timer = None
+        if self.janela is not None:
+            self.janela.destroy()
+            self.janela = None
+
+
+class BotaoIcone(tk.Canvas):
+    """Ação compacta com ícone, foco e descrição sob demanda."""
+
+    def __init__(self, pai, icone, comando, dica, largura=38, altura=32):
+        super().__init__(
+            pai, width=largura, height=altura, bg=pai.cget("bg"), bd=0,
+            highlightthickness=0, takefocus=1, cursor="hand2",
+        )
+        self.icone, self.comando = icone, comando
+        self.imagens = carregar_variantes_icone(self, icone)
+        self.estado, self.sobre, self.ativo = "normal", False, False
+        self.tooltip = _Tooltip(self, dica)
+        self.bind("<Configure>", self._desenhar)
+        self.bind("<Enter>", lambda _e: self._hover(True))
+        self.bind("<Leave>", lambda _e: self._hover(False))
+        self.bind("<Button-1>", self._ativar)
+        self.bind("<Return>", self._ativar)
+        self.bind("<space>", self._ativar)
+        self.bind("<FocusIn>", self._desenhar)
+        self.bind("<FocusOut>", self._desenhar)
+
+    def configure(self, cnf=None, **kw):
+        if isinstance(cnf, dict):
+            kw = {**cnf, **kw}
+        if "state" in kw:
+            self.estado = kw.pop("state")
+            if self.estado == "disabled":
+                self.tooltip.ocultar()
+            super().configure(
+                takefocus=self.estado != "disabled",
+                cursor="hand2" if self.estado != "disabled" else "",
+            )
+        if "active" in kw:
+            self.ativo = bool(kw.pop("active"))
+        if kw:
+            super().configure(**kw)
+        self._desenhar()
+
+    config = configure
+
+    def cget(self, chave):
+        if chave == "state":
+            return self.estado
+        return super().cget(chave)
+
+    def _hover(self, ativo):
+        self.sobre = ativo
+        if ativo and self.estado != "disabled":
+            self.tooltip.mostrar_depois()
+        else:
+            self.tooltip.ocultar()
+        self._desenhar()
+
+    def _ativar(self, _evento=None):
+        if self.estado != "disabled":
+            self.tooltip.ocultar()
+            self.focus_set()
+            tocar("clique")
+            self.comando()
+        return "break"
+
+    def _desenhar(self, _evento=None):
+        self.delete("all")
+        w, h = self.winfo_width(), self.winfo_height()
+        fundo = "#223950" if self.sobre else p.ELEVADO
+        borda = p.TEXTO if self.focus_get() == self else p.LINHA
+        arredondado(self, 1, 1, w-1, h-1, raio=8, fill=fundo, outline=borda)
+        variante = (
+            "desabilitado" if self.estado == "disabled"
+            else "ciano" if self.ativo or self.sobre else "claro"
+        )
+        self.create_image(w/2, h/2, image=self.imagens[variante])
+
+
 class Botao(tk.Canvas):
     """Botão acionável por clique, Enter e espaço."""
 
@@ -101,7 +208,8 @@ class Botao(tk.Canvas):
 class BotaoOlho(tk.Canvas):
     """Alternador de dica com os ícones oficiais do Font Awesome."""
 
-    def __init__(self, pai, comando, aberto=True):
+    def __init__(self, pai, comando, aberto=True,
+                 dica="Mostrar ou ocultar dicas"):
         super().__init__(pai, width=48, height=30, bg=pai.cget("bg"), bd=0,
                          highlightthickness=0, takefocus=1, cursor="hand2")
         self.comando = comando
@@ -112,6 +220,7 @@ class BotaoOlho(tk.Canvas):
         }
         self.estado = "normal"
         self.sobre = False
+        self.tooltip = _Tooltip(self, dica)
         self.bind("<Enter>", lambda _e: self._hover(True))
         self.bind("<Leave>", lambda _e: self._hover(False))
         self.bind("<Button-1>", self._ativar)
@@ -130,6 +239,8 @@ class BotaoOlho(tk.Canvas):
             kw = {**cnf, **kw}
         if "state" in kw:
             self.estado = kw.pop("state")
+            if self.estado == "disabled":
+                self.tooltip.ocultar()
             super().configure(takefocus=self.estado != "disabled",
                               cursor="hand2" if self.estado != "disabled" else "")
         if kw:
@@ -140,10 +251,15 @@ class BotaoOlho(tk.Canvas):
 
     def _hover(self, ativo):
         self.sobre = ativo
+        if ativo and self.estado != "disabled":
+            self.tooltip.mostrar_depois()
+        else:
+            self.tooltip.ocultar()
         self._desenhar()
 
     def _ativar(self, _evento=None):
         if self.estado != "disabled":
+            self.tooltip.ocultar()
             self.focus_set()
             tocar("alternar")
             self.comando()

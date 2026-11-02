@@ -1,12 +1,15 @@
 """Responsividade, telemetria incremental e integridade dos efeitos sonoros."""
 
+import sqlite3
 import wave
+from contextlib import closing
 from hashlib import sha256
 
 import numpy as np
 
 from projeto_ia.damas.full_game import inicial
 from projeto_ia.damas.opponent import analisar
+from projeto_ia.damas.trace_store import GravadorRastro, remover_rastro
 from projeto_ia.paths import BASE_FINAIS, TABELA_FINAIS
 from projeto_ia.sounds.player import EFEITOS, LICENCA
 
@@ -25,6 +28,29 @@ def test_telemetria_publica_pulsos_durante_a_busca():
     assert [evento["nos"] for evento in eventos] == sorted(
         evento["nos"] for evento in eventos
     )
+
+
+def test_rastro_detalhado_e_persistido_para_consulta_paginada():
+    gravador = GravadorRastro()
+    resultado = analisar(
+        inicial(), segundos=.15, profundidade_maxima=8, detalhe=gravador,
+    )
+    caminho = gravador.concluir(resultado)
+    try:
+        with closing(sqlite3.connect(caminho)) as conexao:
+            total = conexao.execute("SELECT COUNT(*) FROM nos").fetchone()[0]
+            colunas = {
+                linha[1] for linha in conexao.execute("PRAGMA table_info(nos)")
+            }
+            assert total == resultado.nos
+            assert total > 100
+            assert {"id", "pai", "iteracao", "nota", "motivo"} <= colunas
+            assert conexao.execute(
+                "SELECT COUNT(*) FROM nos WHERE pai=0"
+            ).fetchone()[0] > 0
+    finally:
+        remover_rastro(caminho)
+    assert not caminho.exists()
 
 
 def test_sons_locais_sao_wav_validos_e_tem_licenca():

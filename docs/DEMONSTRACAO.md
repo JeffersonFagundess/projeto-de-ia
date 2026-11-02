@@ -14,13 +14,13 @@ Mostre os cartões **Com IA** e **Sem dicas**. A borda indica a vez de jogar.
 
 **2. Mostre como funciona — 30 segundos**
 
-Clique em **Exemplo rápido** e depois em **Jogar com a sugestão**. A peça faz uma sequência de capturas, e a tela explica o resultado. Diga que é um tabuleiro preparado para demonstrar o movimento, e que ele não conta no placar.
+Clique em **Exemplo rápido** e depois na **lâmpada**. A peça faz uma sequência de capturas, e a tela explica o resultado. Diga que é um tabuleiro preparado para demonstrar o movimento, e que ele não conta no placar.
 
 **3. Comece uma partida real — 1 minuto**
 
-Clique em **Nova partida**. Há 12 peças de cada lado. Mostre o olho aberto e feche-o: a seta desaparece, a previsão do jogador é suspensa e o terminal confirma que a IA do computador continua ativa. Abra o olho novamente para recalcular a posição. O jogador 1 aceita a sugestão ou clica na peça e numa casa verde. Ao passar a vez, a dica desaparece e o jogador 2 faz sua própria escolha. As casas verdes indicam movimentos permitidos para ambos; não são recomendações para o lado sem ajuda.
+Clique em **Nova partida**. Há 12 peças de cada lado. Mostre o olho aberto e feche-o: a seta desaparece e a previsão do jogador é suspensa; a IA do computador continua ativa. Abra o olho novamente para recalcular a posição. O jogador 1 aceita a sugestão pela lâmpada ou clica na peça e numa casa verde. Ao passar a vez, a dica desaparece e o jogador 2 faz sua própria escolha. As casas verdes indicam movimentos permitidos para ambos; não são recomendações para o lado sem ajuda.
 
-Mostre também a **Telemetria da busca**: os pontos e conexões animados representam posição, jogadas, respostas e escolha. O terminal registra a profundidade concluída, as posições avaliadas, a nota e a sequência prevista; não é um raciocínio inventado. O botão **Aprofundar análise** amplia a busca para até 8 segundos. A sugestão automática usa de 3 a 5 segundos conforme o número de peças; o computador usa 1,5 segundo. Para uma comparação técnica com tempo igual, execute `python -m tools.avaliar_assistente --partidas 4 --segundos 1.5`.
+Abra o ícone de **gráfico** para mostrar a **Telemetria da busca**: os pontos e conexões animados representam posição, jogadas, respostas e escolha. O terminal registra a profundidade concluída, as posições avaliadas, a nota e a sequência prevista; não é um raciocínio inventado. Clique em **Detalhar caminho** para registrar cada nó e selecionar posições da árvore em páginas. A **lupa** amplia a busca para até 8 segundos sem gravar esse rastro completo. A sugestão automática usa de 3 a 5 segundos conforme o número de peças; o computador usa 1,5 segundo. Para uma comparação técnica com tempo igual, execute `python -m tools.avaliar_assistente --partidas 4 --segundos 1.5`.
 
 **4. Explique o aprendizado — 1 minuto**
 

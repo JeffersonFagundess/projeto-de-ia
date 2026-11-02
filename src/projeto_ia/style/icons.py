@@ -10,8 +10,11 @@ GLIFOS = {
 
 ICONES_FONT_AWESOME = {
     "adicionar": "\uf067",
+    "analise": "\uf201",
+    "aprofundar": "\uf002",
     "desfazer": "\uf2ea",
     "jogar": "\uf04b",
+    "lampada": "\uf0eb",
     "olho_aberto": "\uf06e",
     "olho_fechado": "\uf070",
     "terminal": "\uf120",

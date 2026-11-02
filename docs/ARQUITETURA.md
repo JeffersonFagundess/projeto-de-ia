@@ -7,7 +7,7 @@ entrada única (main.py)
     ↓
 interface (src/projeto_ia/ui/app.py)
     ├─ olho aberto/fechado: política opcional de exibição e cálculo da dica
-    ├─ telemetria animada e terminal (ui/reasoning.py)
+    ├─ janela separada de telemetria e exploração (ui/reasoning.py)
     ├─ processo persistente da IA (ui/analysis_service.py)
     ├─ efeitos WAV assíncronos (src/projeto_ia/sounds/)
     └─ estilo central (src/projeto_ia/style/)
@@ -30,6 +30,8 @@ política de ajuda (damas/assistant.py)
 As regras públicas ficam em `full_game.py`. O tabuleiro compacto da busca deve produzir os mesmos lances; `tests/test_search.py` compara ambos em posições de partidas simuladas e finais variados. A busca roda no processo persistente `IA-Damas`, separado do processo do Tkinter. Isso remove a disputa do GIL com a interface e preserva o modelo e seus caches entre turnos. Um contador compartilhado de geração cancela e descarta resultados antigos após desfazer, iniciar, ocultar a dica ou trocar o lado assistido.
 
 Durante cada profundidade, `opponent.py` publica pulsos limitados a aproximadamente 120 ms com nível e quantidade de posições. Ao concluir o nível, inclui nota e linha principal. O processo envia os eventos por uma fila limitada; somente o Tkinter atualiza o terminal e a animação. Pulsos podem ser descartados se a interface estiver atrasada, mas o resultado nunca é descartado. A telemetria permanece opcional e isolada: uma falha no consumidor não altera a jogada escolhida. O olho suspende apenas a análise destinada ao jogador; a busca automática do computador segue independente.
+
+O comando **Detalhar caminho** inicia uma busca explícita instrumentada. Cada nó concluído — inclusive os interrompidos pelo limite de tempo — é gravado em lotes por `damas/trace_store.py` num SQLite temporário. A fila envia à interface somente o caminho do arquivo pronto. `ui/reasoning.py` consulta 250 nós por página e reconstrói sob demanda a cadeia de pais do nó selecionado. Assim, uma captura com 40 mil ou mais interações não cria 40 mil widgets nem transfere todos os registros pela fila do Tkinter. O arquivo anterior é removido ao recapturar ou fechar o aplicativo.
 
 O diagnóstico, as medições e a ordem recomendada para futuras otimizações estão em `docs/DESEMPENHO.md`.
 

@@ -44,7 +44,8 @@ class Registro:
 
 def analisar(estado, segundos=1.5, profundidade_maxima=12, avaliador=avaliar,
              historico=(), sem_progresso=0, cancelado=lambda: False,
-             gerador=None, margem=0, usar_transposicoes=True, progresso=None):
+             gerador=None, margem=0, usar_transposicoes=True, progresso=None,
+             detalhe=None):
     """Só varia entre alternativas verificadas na mesma profundidade.
 
     `gerador` permite desempates reproduzíveis. `margem` usa a escala em que um
@@ -123,32 +124,60 @@ def analisar(estado, segundos=1.5, profundidade_maxima=12, avaliador=avaliar,
         contexto = frozenset((p,n) for p,n in repeticoes.items() if p != posicao or n > 1)
         return posicao,progresso,contexto
 
-    def descendente(lance,profundidade,alfa,beta,progresso,ply,repeticoes):
+    def descendente(lance,profundidade,alfa,beta,progresso,ply,repeticoes,pai=0):
         if lance.irreversivel:
-            return busca(lance.proximo,profundidade,alfa,beta,0,ply,{lance.proximo:1})
+            return busca(
+                lance.proximo, profundidade, alfa, beta, 0, ply,
+                {lance.proximo:1}, pai, lance.origem, lance.destino,
+            )
         novo = lance.proximo
         repeticoes[novo] = repeticoes.get(novo,0)+1
         try:
-            return busca(novo,profundidade,alfa,beta,progresso+1,ply,repeticoes)
+            return busca(
+                novo, profundidade, alfa, beta, progresso+1, ply,
+                repeticoes, pai, lance.origem, lance.destino,
+            )
         finally:
             repeticoes[novo] -= 1
             if not repeticoes[novo]:
                 del repeticoes[novo]
 
-    def busca(posicao,profundidade,alfa,beta,progresso,ply,repeticoes):
+    def busca(posicao,profundidade,alfa,beta,progresso,ply,repeticoes,
+              pai=0,origem=-1,destino=-1):
         nonlocal nos
         nos += 1
+        id_no = nos
+        alfa_entrada, beta_entrada = alfa, beta
+
+        def concluir(nota, linha, motivo):
+            if detalhe is not None:
+                dados = {
+                    "id": id_no, "pai": pai, "iteracao": profundidade_atual,
+                    "ply": ply, "restante": profundidade,
+                    "origem": origem, "destino": destino,
+                    "vermelhas": posicao.vermelhas, "pretas": posicao.pretas,
+                    "damas": posicao.damas, "vez": posicao.vez,
+                    "alfa": alfa_entrada, "beta": beta_entrada,
+                    "nota": nota, "motivo": motivo,
+                }
+                try:
+                    detalhe(dados)
+                except Exception:  # noqa: BLE001 - observabilidade opcional
+                    return nota, linha
+            return nota, linha
+
         if nos % 64 == 1 and (monotonic() >= fim or cancelado()):
+            concluir(0, (), "interrompido")
             raise TimeoutError
         if nos % 128 == 1:
             pulsar()
         lances = gerar_lances(posicao)
         if not lances:
-            return -VITORIA+ply,()
+            return concluir(-VITORIA+ply,(),"terminal")
         if repeticoes.get(posicao,0) >= 3 or progresso >= 80:
-            return 0,()
+            return concluir(0,(),"empate")
         if profundidade == 0 and not lances[0].capturas:
-            return estimar(posicao),()
+            return concluir(estimar(posicao),(),"avaliacao")
 
         k = chave(posicao,progresso,repeticoes) if usar_transposicoes else None
         anterior = tabela.get(k)
@@ -157,13 +186,13 @@ def analisar(estado, segundos=1.5, profundidade_maxima=12, avaliador=avaliar,
         if anterior and anterior.profundidade >= profundidade:
             nota = ler_nota(anterior.nota,ply)
             if anterior.limite == "exato":
-                return nota,anterior.linha
+                return concluir(nota,anterior.linha,"cache")
             if anterior.limite == "inferior":
                 alfa = max(alfa,nota)
             else:
                 beta = min(beta,nota)
             if alfa >= beta:
-                return nota,anterior.linha
+                return concluir(nota,anterior.linha,"cache-corte")
 
         def ordem(lance):
             return (lance == favorito,lance.capturas,
@@ -172,7 +201,18 @@ def analisar(estado, segundos=1.5, profundidade_maxima=12, avaliador=avaliar,
 
         valor,linha = -float("inf"),()
         for lance in sorted(lances,key=ordem,reverse=True):
-            nota,filhos = descendente(lance,max(0,profundidade-1),-beta,-alfa,progresso,ply+1,repeticoes)
+            try:
+                nota,filhos = descendente(
+                    lance, max(0,profundidade-1), -beta, -alfa,
+                    progresso, ply+1, repeticoes, id_no,
+                )
+            except TimeoutError:
+                concluir(
+                    0 if valor == -float("inf") else valor,
+                    linha,
+                    "interrompido",
+                )
+                raise
             nota = -nota
             if nota > valor:
                 valor,linha = nota,(lance,)+filhos
@@ -185,7 +225,7 @@ def analisar(estado, segundos=1.5, profundidade_maxima=12, avaliador=avaliar,
         if usar_transposicoes and (len(tabela) < 60000 or k in tabela):
             tipo = "superior" if valor <= alfa_original else "inferior" if valor >= beta_original else "exato"
             tabela[k] = Registro(profundidade,guardar_nota(valor,ply),tipo,linha)
-        return valor,linha
+        return concluir(valor,linha,"corte" if alfa >= beta else "expandido")
 
     _melhor,nota_melhor,profundidade_feita,linha_melhor,quantidade = opcoes[0],0,0,(opcoes[0],),1
     for profundidade in range(1,profundidade_maxima+1):

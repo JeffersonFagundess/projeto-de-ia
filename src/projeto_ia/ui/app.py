@@ -12,7 +12,7 @@ from projeto_ia.damas.search_board import compactar
 from projeto_ia.paths import RELATORIO_COMPLETAS
 from projeto_ia.sounds import tocar
 from projeto_ia.style import palette as t
-from projeto_ia.style.controls import Botao, BotaoOlho, Escolha
+from projeto_ia.style.controls import Botao, BotaoIcone, BotaoOlho, Escolha
 from projeto_ia.style.fonts import fonte
 from projeto_ia.style.icons import desenhar_marca, glifo
 from projeto_ia.style.windows import (
@@ -22,7 +22,7 @@ from projeto_ia.style.windows import (
 )
 from projeto_ia.ui.analysis_service import ServicoAnalise
 from projeto_ia.ui.board import Tabuleiro
-from projeto_ia.ui.reasoning import PainelRaciocinio
+from projeto_ia.ui.reasoning import JanelaAnalise
 
 FUNDO, PAPEL, TEXTO, SUAVE = t.FUNDO, t.PAINEL, t.TEXTO, t.SUAVE
 AZUL, CORAL, LINHA = t.CIANO, t.CORAL, t.LINHA
@@ -35,7 +35,7 @@ def nome(cor):
 class JanelaPrincipal:
     def __init__(self, root):
         self.root = root
-        preparar(root,"Damas | Duelo com IA","1320x680",(1180,660))
+        preparar(root,"Damas | Duelo com IA","1080x680",(680,640))
         self.config = Configuracao()
         self.gerador = random.Random()
         self.jogo = Jogo()
@@ -48,7 +48,13 @@ class JanelaPrincipal:
         self.dicas_visiveis = True
         self.placar = {"com":0, "sem":0, "empate":0}
         self.resultado_contado = None
+        self._animacao_layout = None
         self._montar()
+        self.painel = JanelaAnalise(
+            root,
+            self.detalhar_caminho,
+        )
+        self._aplicar_layout(animar=False)
         self.atualizar()
         self.responder()
         root.protocol("WM_DELETE_WINDOW", self.fechar)
@@ -94,12 +100,34 @@ class JanelaPrincipal:
 
         corpo = tk.Frame(self.root, bg=FUNDO)
         corpo.pack(fill="both", expand=True, padx=20, pady=(0, 16))
+        self.corpo = corpo
         esquerda = tk.Frame(corpo, bg=PAPEL, padx=12, pady=12,
                             highlightthickness=1, highlightbackground=LINHA)
+        self.painel_tabuleiro = esquerda
         esquerda.pack(side="left", fill="y")
         cabecalho = tk.Frame(esquerda, bg=PAPEL)
         cabecalho.pack(fill="x", pady=(0, 10))
-        self.texto(cabecalho, "TABULEIRO", 8, SUAVE, True).pack(side="left")
+        ferramentas = tk.Frame(cabecalho, bg=PAPEL)
+        ferramentas.pack(side="left")
+        self.bt_olho=BotaoOlho(ferramentas,self.alternar_dicas,aberto=True)
+        self.bt_olho.pack(side="left",padx=(0,4))
+        self.bt_jogar=BotaoIcone(
+            ferramentas,"lampada",self.aplicar_sugestao,"Usar sugestão",
+        )
+        self.bt_jogar.pack(side="left",padx=(0,4))
+        self.bt_dica=BotaoIcone(
+            ferramentas,"aprofundar",lambda:self.buscar(aprofundar=True),
+            "Aprofundar análise",
+        )
+        self.bt_dica.pack(side="left",padx=(0,4))
+        self.bt_analise=BotaoIcone(
+            ferramentas,"analise",self.abrir_analise,"Abrir análise e telemetria",
+        )
+        self.bt_analise.pack(side="left",padx=(0,4))
+        self.bt_voltar=BotaoIcone(
+            ferramentas,"desfazer",self.voltar,"Desfazer jogada",
+        )
+        self.bt_voltar.pack(side="left")
         self.caption = tk.StringVar()
         self.texto(cabecalho, textvariable=self.caption, tamanho=8, cor=SUAVE).pack(side="right")
         moldura = tk.Frame(esquerda, bg="#365369", padx=4, pady=4)
@@ -112,11 +140,9 @@ class JanelaPrincipal:
         self.texto(legenda, "2  Vá para a casa verde", 9, AZUL).pack(side="left")
         self.texto(esquerda, "Coroa = dama  ·  Capturar é obrigatório", 9, SUAVE).pack()
 
-        self.painel = PainelRaciocinio(corpo)
-        self.painel.pack(side="right", fill="y", padx=(14, 0))
-
         direita = tk.Frame(corpo, bg=PAPEL, padx=16, pady=12,
                            highlightthickness=1, highlightbackground=LINHA)
+        self.painel_jogo = direita
         direita.pack(side="left", fill="both", expand=True, padx=(14,0))
         jogadores = tk.Frame(direita,bg=PAPEL)
         jogadores.pack(fill="x")
@@ -142,8 +168,6 @@ class JanelaPrincipal:
         self.status_ia=tk.StringVar()
         self.ajuda_titulo=self.texto(ajuda_cabecalho,textvariable=self.status_ia,tamanho=10,cor=AZUL,forte=True)
         self.ajuda_titulo.pack(side="left",anchor="w")
-        self.bt_olho=BotaoOlho(ajuda_cabecalho,self.alternar_dicas,aberto=True)
-        self.bt_olho.pack(side="right")
         self.estado_dicas=tk.StringVar(value="DICAS VISÍVEIS")
         self.rotulo_dicas=self.texto(ajuda_cabecalho,textvariable=self.estado_dicas,
                                      tamanho=7,cor=SUAVE,forte=True)
@@ -152,15 +176,8 @@ class JanelaPrincipal:
         self.motivo=tk.StringVar()
         self.ajuda_texto=self.texto(self.ajuda_frame,textvariable=self.motivo,wraplength=420,justify="left",height=3,anchor="nw")
         self.ajuda_texto.pack(fill="x",pady=(5,0))
-        self.bt_jogar=self.botao(direita,"Jogar com a sugestão  →",self.aplicar_sugestao,True)
-        self.bt_jogar.pack(fill="x")
-        acoes=tk.Frame(direita,bg=PAPEL);acoes.pack(fill="x",pady=(7,10))
-        self.bt_dica=self.botao(acoes,"Aprofundar análise",lambda:self.buscar(aprofundar=True))
-        self.bt_dica.pack(side="left",expand=True,fill="x",padx=(0,4))
-        self.bt_voltar=self.botao(acoes,"Desfazer",self.voltar,icone="desfazer")
-        self.bt_voltar.pack(side="left",expand=True,fill="x",padx=(4,0))
         self.relato=tk.StringVar(value="As vermelhas começam. Você pode aceitar a dica ou escolher outra jogada.")
-        self.texto(direita,textvariable=self.relato,tamanho=9,cor=SUAVE,wraplength=450,justify="left",height=2,anchor="nw").pack(fill="x")
+        self.texto(direita,textvariable=self.relato,tamanho=9,cor=SUAVE,wraplength=450,justify="left",height=2,anchor="nw").pack(fill="x",pady=(2,0))
         rodape=tk.Frame(direita,bg=PAPEL);rodape.pack(side="bottom",fill="x")
         tk.Frame(rodape,height=1,bg=LINHA).pack(fill="x",pady=(4,8))
         self.serie=tk.StringVar()
@@ -173,6 +190,60 @@ class JanelaPrincipal:
             link.bind("<space>",lambda _e,c=comando:c())
             link.bind("<FocusIn>",lambda e:e.widget.configure(fg=TEXTO))
             link.bind("<FocusOut>",lambda e:e.widget.configure(fg=AZUL))
+
+    def _aplicar_layout(self, animar=True):
+        """Mostra ferramentas do duelo local e anima a largura da janela."""
+        expandido = self.config.modo == "dupla"
+        if expandido and not self.painel_jogo.winfo_manager():
+            self.painel_jogo.pack(
+                side="left", fill="both", expand=True, padx=(14, 0),
+            )
+        elif not expandido and self.painel_jogo.winfo_manager():
+            self.painel_jogo.pack_forget()
+
+        alvo = 1080 if expandido else 680
+        if self._animacao_layout is not None:
+            self.root.after_cancel(self._animacao_layout)
+            self._animacao_layout = None
+        self.root.update_idletasks()
+        atual = self.root.winfo_width()
+        altura = max(640, self.root.winfo_height())
+        if not animar or abs(atual-alvo) < 5:
+            self.root.geometry(f"{alvo}x{altura}")
+            return
+
+        passos = 10
+
+        def redimensionar(passo=1):
+            progresso = passo / passos
+            suave = 1-(1-progresso)**3
+            largura = round(atual+(alvo-atual)*suave)
+            self.root.geometry(f"{largura}x{altura}")
+            if passo < passos:
+                self._animacao_layout = self.root.after(
+                    18, redimensionar, passo+1,
+                )
+            else:
+                self._animacao_layout = None
+
+        redimensionar()
+
+    def abrir_analise(self):
+        self.painel.abrir()
+
+    def detalhar_caminho(self):
+        if self.ocupado or self.jogo.resultado:
+            return False
+        vez = self.jogo.estado.vez
+        somente_analise = (
+            not self.config.permite_ajuda(vez) or not self.dicas_visiveis
+        )
+        self.buscar(
+            aprofundar=True,
+            detalhar=True,
+            somente_analise=somente_analise,
+        )
+        return True
 
     def atualizar(self):
         self.origem=self.sugestao=self.analise=None
@@ -188,8 +259,8 @@ class JanelaPrincipal:
         self.caption.set("EXEMPLO PREPARADO" if self.demonstracao else f"{n:02d} {'JOGADA' if n == 1 else 'JOGADAS'} · PARTIDA COMPLETA")
         self.titulo.set("Empate" if fim == "empate" else f"{nome(fim).capitalize()} venceram!" if fim else f"Vez do {'computador' if self.config.usa_computador(e.vez) else 'jogador 1' if e.vez == 'V' else 'jogador 2'}")
         self.instrucao.set("A partida terminou. Comece outra para trocar os papéis." if fim else f"Mova uma peça {'vermelha' if e.vez == 'V' else 'preta'} para uma casa verde.")
-        self.bt_jogar.configure(state="disabled",text="Jogar com a sugestão  →")
-        self.bt_dica.configure(state="disabled")
+        self.bt_jogar.configure(state="disabled",active=False)
+        self.bt_dica.configure(state="disabled",active=False)
         self.bt_voltar.configure(state="normal" if self.jogo.historico or self.ocupado else "disabled")
         self.bt_olho.definir(self.dicas_visiveis)
         self.bt_olho.configure(state="disabled" if self.ocupado and self.config.usa_computador(e.vez) else "normal")
@@ -200,7 +271,6 @@ class JanelaPrincipal:
         self.ajuda_cabecalho.configure(bg=fundo_ajuda)
         self.ajuda_titulo.configure(bg=fundo_ajuda,fg=AZUL if com_ajuda else t.PRATA)
         self.rotulo_dicas.configure(bg=fundo_ajuda,fg=AZUL if self.dicas_visiveis else SUAVE)
-        self.bt_olho.configure(bg=fundo_ajuda)
         self.ajuda_texto.configure(bg=fundo_ajuda)
         if fim:
             self.status_ia.set("Resultado da partida")
@@ -216,7 +286,6 @@ class JanelaPrincipal:
         elif self.config.permite_ajuda(e.vez):
             self.status_ia.set("Dicas ocultas")
             self.motivo.set("Clique no olho fechado para analisar esta posição e revelar uma sugestão.")
-            self.bt_jogar.configure(text="Ative as dicas para receber sugestão")
             self.painel.ocultar()
         elif self.config.usa_computador(e.vez):
             self.status_ia.set("Turno do computador")
@@ -224,7 +293,6 @@ class JanelaPrincipal:
         else:
             self.status_ia.set("Sua estratégia, sua jogada")
             self.motivo.set("Este jogador está sem ajuda. Escolha uma peça e depois uma casa verde.")
-            self.bt_jogar.configure(text="Sem dicas nesta vez")
             self.painel.aguardar("Turno sem assistência: nenhuma recomendação é calculada.")
         self.tabuleiro.exibir(e,caminhos=self.jogo.caminhos_recentes())
         self.serie.set(f"PLACAR    Com IA  {self.placar['com']}    /    Sem ajuda  {self.placar['sem']}    /    Empates  {self.placar['empate']}")
@@ -233,10 +301,11 @@ class JanelaPrincipal:
         self.geracao+=1
         self.analisador.cancelar();self.analise_id=None
         self.tabuleiro.cancelar();self.ocupado=False
-        if hasattr(self,"painel"):self.painel.cancelar()
+        if hasattr(self,"painel"):
+            self.painel.cancelar();self.painel.falha_detalhes()
 
     def fechar(self):
-        self.cancelar();self.analisador.fechar();self.root.destroy()
+        self.cancelar();self.analisador.fechar();self.painel.fechar();self.root.destroy()
 
     def nova(self):
         self.cancelar();self.demonstracao=False;self.jogo=Jogo();self.resultado_contado=None
@@ -245,7 +314,7 @@ class JanelaPrincipal:
 
     def configurar(self,_evento=None):
         self.config=Configuracao("dupla" if self.modo.current() == 0 else "computador","V" if self.lado.current() == 0 else "P")
-        self.nova()
+        self._aplicar_layout();self.nova()
 
     def alternar_dicas(self):
         if self.ocupado and self.config.usa_computador(self.jogo.estado.vez):
@@ -266,6 +335,7 @@ class JanelaPrincipal:
         casa={nome_casa(i):i for i in range(32)}
         estado=Posicao(tuple(sorted(casa[c] for c in ('a1','c1','h2'))),tuple(sorted(casa[c] for c in ('d2','f4','f6'))))
         self.config=Configuracao();self.modo.current(0);self.lado.current(0)
+        self._aplicar_layout()
         self.jogo=Jogo(estado)
         self.relato.set("Exemplo preparado para a apresentação. A sequência mostra uma captura múltipla; não conta no placar.")
         self.atualizar();self.responder()
@@ -310,10 +380,15 @@ class JanelaPrincipal:
         if self.config.usa_computador(vez):self.buscar(True)
         elif self.config.permite_ajuda(vez) and self.dicas_visiveis:self.buscar(False)
 
-    def buscar(self,executar=False,aprofundar=False):
+    def buscar(self,executar=False,aprofundar=False,detalhar=False,
+               somente_analise=False):
         vez=self.jogo.estado.vez
-        permitido=self.config.usa_computador(vez) if executar else self.config.permite_ajuda(vez)
-        if not permitido or (not executar and not self.dicas_visiveis) or self.ocupado or self.jogo.resultado:return
+        permitido=(self.config.usa_computador(vez) if executar
+                   else self.config.permite_ajuda(vez) or somente_analise)
+        if (not permitido or (not executar and not self.dicas_visiveis and
+                              not somente_analise) or self.ocupado or
+                self.jogo.resultado):return
+        if detalhar:self.painel.abrir()
         self.ocupado=True;token=self.geracao;estado=self.jogo.estado
         historico=tuple(e for e,_,_ in self.jogo.historico);sem_progresso=self.jogo.sem_progresso
         self.bt_jogar.configure(state="disabled");self.bt_dica.configure(state="disabled");self.bt_voltar.configure(state="normal")
@@ -322,11 +397,9 @@ class JanelaPrincipal:
         if executar:
             self.status_ia.set("●  Computador pensando")
             self.motivo.set("Aguarde o movimento do adversário. A ajuda volta na sua vez.")
-            self.bt_jogar.configure(text="Aguarde o adversário…")
         else:
             self.status_ia.set("●  Aprofundando a análise…" if aprofundar else "●  Analisando os dois lados…")
             self.motivo.set("Estou verificando mais jogadas à frente. Aguarde até 8 segundos." if aprofundar else "Comparando seus movimentos e as respostas do adversário. A seta mostrará a sugestão.")
-            self.bt_jogar.configure(text="Analisando a posição…")
         self.painel.iniciar("computador" if executar else "jogador",len(self.jogo.lances),aprofundar)
         identificador = self.analisador.analisar(
             estado,
@@ -337,6 +410,7 @@ class JanelaPrincipal:
             segundos=8 if aprofundar else None,
             profundidade_maxima=18 if aprofundar else 12,
             variar=not aprofundar,
+            detalhar=detalhar,
         )
         self.analise_id = identificador
         def receber():
@@ -347,6 +421,7 @@ class JanelaPrincipal:
                     continue
                 if tipo == "progresso":self.painel.registrar_progresso(valor)
                 elif tipo == "resultado":resposta=valor
+                elif tipo == "detalhes":self.painel.detalhes_disponiveis(valor)
                 else:erro=valor
             if resposta is None and erro is None:
                 if not self.analisador.ativo:
@@ -357,6 +432,7 @@ class JanelaPrincipal:
             self.ocupado=False
             if erro is not None:
                 tocar("erro")
+                if detalhar:self.painel.falha_detalhes()
                 nome_erro,mensagem=erro
                 self.atualizar();self.status_ia.set("Análise indisponível")
                 self.motivo.set(f"Confira os dados e modelos do projeto. Erro: {nome_erro}: {mensagem}")
@@ -364,12 +440,17 @@ class JanelaPrincipal:
                 self.instrucao.set("Você pode continuar jogando manualmente.");return
             self.painel.concluir(resposta,computador=executar)
             if executar:self.jogar(resposta.lance);return
+            if somente_analise:
+                self.atualizar();self.painel.concluir(resposta)
+                self.instrucao.set("Captura detalhada concluída; explore os nós na janela de análise.")
+                return
             tocar("dica")
             self.atualizar();self.analise=resposta;self.sugestao=resposta.lance
             caminho=resposta.lance.caminho
             self.status_ia.set(f"{glifo('brilho')}  Sugestão: {nome_casa(caminho[0]).upper()} {glifo('avancar')} {nome_casa(caminho[-1]).upper()}")
             self.motivo.set(self.explicar(resposta))
-            self.bt_jogar.configure(state="normal");self.bt_dica.configure(state="normal")
+            self.bt_jogar.configure(state="normal",active=True)
+            self.bt_dica.configure(state="normal")
             self.instrucao.set("Siga a seta ou escolha seu próprio movimento.")
             self.mostrar_dica()
         self.root.after(40,receber)

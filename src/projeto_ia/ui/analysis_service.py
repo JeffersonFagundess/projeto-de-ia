@@ -12,6 +12,7 @@ def _executar(entrada, saida, geracao):
     os.environ.setdefault("OMP_NUM_THREADS", "1")
 
     from projeto_ia.damas.assistant import analisar_turno
+    from projeto_ia.damas.trace_store import GravadorRastro
 
     while True:
         trabalho = entrada.get()
@@ -32,6 +33,7 @@ def _executar(entrada, saida, geracao):
             except queue.Full:
                 pass
 
+        gravador = GravadorRastro() if parametros["detalhar"] else None
         try:
             resposta = analisar_turno(
                 parametros["estado"],
@@ -44,12 +46,20 @@ def _executar(entrada, saida, geracao):
                 profundidade_maxima=parametros["profundidade_maxima"],
                 variar=parametros["variar"],
                 progresso=progresso,
+                detalhe=gravador,
             )
             if not cancelado():
+                if gravador is not None:
+                    caminho = gravador.concluir(resposta)
+                    gravador = None
+                    saida.put((identificador, "detalhes", str(caminho)))
                 saida.put((identificador, "resultado", resposta))
         except Exception as erro:  # noqa: BLE001 - fronteira do processo
             if not cancelado():
                 saida.put((identificador, "erro", (type(erro).__name__, str(erro))))
+        finally:
+            if gravador is not None:
+                gravador.descartar()
 
 
 class ServicoAnalise:
@@ -77,7 +87,8 @@ class ServicoAnalise:
         return self._geracao.value
 
     def analisar(self, estado, com_ajuda, semente, historico, sem_progresso,
-                 segundos=None, profundidade_maxima=12, variar=True):
+                 segundos=None, profundidade_maxima=12, variar=True,
+                 detalhar=False):
         identificador = self.cancelar()
         parametros = {
             "estado": estado,
@@ -88,6 +99,7 @@ class ServicoAnalise:
             "segundos": segundos,
             "profundidade_maxima": profundidade_maxima,
             "variar": variar,
+            "detalhar": detalhar,
         }
         while True:
             try:
